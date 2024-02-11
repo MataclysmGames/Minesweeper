@@ -1,27 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://oloj7yewcqua"]
 
 [ext_resource type="Script" path="res://scripts/sweeper_board.gd" id="1_sb4r0"]
-[ext_resource type="PackedScene" uid="uid://dmdxgup0cw2ip" path="res://scenes/default_grid_button.tscn" id="2_uifm3"]
+[ext_resource type="PackedScene" uid="uid://dhfxmhxr2hy4y" path="res://scenes/default_texture_button.tscn" id="2_he50q"]
 
-[node name="SweeperBoard" type="CanvasLayer"]
+[node name="SweeperBoard" type="Node2D"]
 script = ExtResource("1_sb4r0")
-config_button = ExtResource("2_uifm3")
+config_button = ExtResource("2_he50q")
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GridContainer" type="GridContainer" parent="Control"]
-custom_minimum_size = Vector2(0, 320)
-layout_mode = 1
+[node name="GridContainer" type="GridContainer" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_bottom = 360.0
 grow_horizontal = 2
-size_flags_horizontal = 0
 columns = 4
