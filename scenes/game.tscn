@@ -8,7 +8,7 @@
 script = ExtResource("1_ny4eb")
 
 [node name="SweeperBoard" parent="." instance=ExtResource("2_3vwoc")]
-num_columns = 14
+num_columns = 16
 num_rows = 10
-num_mines = 12
+num_mines = 20
 config_button = ExtResource("3_ul8a7")
