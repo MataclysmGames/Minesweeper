@@ -20,5 +20,5 @@ butler push C:\Users\matte\Documents\Games\Minesweeper\Web\ mataclysm/Minesweepe
 ## Host Web Build Locally
 ```
 dotnet tool install --global dotnet-serve
-dotnet serve --directory C:\Users\matte\Documents\Games\Accelerant\Web\ -h "Cross-Origin-Opener-Policy: same-origin" -h "Cross-Origin-Embedder-Policy: require-corp" -h "Access-Control-Allow-Origin: *" --open-browser
+dotnet serve --directory C:\Users\matte\Documents\Games\Minesweeper\Web\ -h "Cross-Origin-Opener-Policy: same-origin" -h "Cross-Origin-Embedder-Policy: require-corp" -h "Access-Control-Allow-Origin: *" --open-browser
 ```
