@@ -140,7 +140,7 @@ func calculate_value_for_cell(index : int) -> int:
 	return mine_count
 
 func get_adjacent_cells(index : int) -> Array[int]:
-	var adjacent_cells : Array[int]
+	var adjacent_cells : Array[int] = []
 	var coords = coords_from_index(index)
 	for offset in adjacent_cell_offsets:
 		var next_col = (offset[0] + coords[0]) % num_columns

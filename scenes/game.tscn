@@ -42,7 +42,7 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
 min_value = 8.0
 max_value = 24.0
-value = 8.0
+value = 14.0
 
 [node name="ColumnLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -60,7 +60,7 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
 min_value = 8.0
 max_value = 24.0
-value = 8.0
+value = 14.0
 
 [node name="MinesLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -78,7 +78,7 @@ theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
 theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
 min_value = 8.0
 max_value = 64.0
-value = 8.0
+value = 25.0
 
 [node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -89,6 +89,10 @@ layout_mode = 2
 
 [node name="ScoreLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Exit"
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2

@@ -10,6 +10,7 @@ extends HBoxContainer
 @onready var start_button = $VBoxContainer/StartButton
 @onready var time_left_label = $VBoxContainer/TimeLeftLabel
 @onready var score_label = $VBoxContainer/ScoreLabel
+@onready var exit_button = $VBoxContainer/ExitButton
 
 @onready var sweeper_board : SweeperBoard = $CenterContainer/SweeperBoard
 
@@ -20,11 +21,17 @@ var total_score : int = 0
 
 func _ready():
 	row_slider.value_changed.connect(update_row_label)
+	update_row_label(row_slider.value)
 	column_slider.value_changed.connect(update_column_label)
+	update_column_label(column_slider.value)
 	mines_slider.value_changed.connect(update_mines_label)
+	update_mines_label(mines_slider.value)
+	
 	start_button.pressed.connect(start)
+	exit_button.pressed.connect(exit_game)
 	sweeper_board.board_cleared.connect(on_board_cleared)
 	sweeper_board.board_failed.connect(on_board_failed)
+	
 	sweeper_board.hide()
 	timer = Timer.new()
 	timer.one_shot = true
@@ -32,7 +39,7 @@ func _ready():
 	timer.timeout.connect(on_timeout)
 	add_child(timer)
 	
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 	time_left_label.text = get_time_left_text()
@@ -55,7 +62,7 @@ func start():
 
 func on_board_cleared():
 	var seconds_remaining = timer.time_left
-	var score = pow(mines_slider.value + 2, 3) + (seconds_remaining * seconds_remaining * 3)
+	var score = pow(mines_slider.value * 2, 3) + (seconds_remaining * seconds_remaining * 3)
 	total_score += score
 	reset()
 
@@ -78,3 +85,6 @@ func get_time_left_text():
 	var seconds_remaining = timer.time_left
 	var minutes_remaining : int = seconds_remaining / 60
 	return "%02d:%02.3f" % [minutes_remaining, seconds_remaining - (minutes_remaining * 60)]
+
+func exit_game():
+	get_tree().quit()
