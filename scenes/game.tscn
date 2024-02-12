@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm4ev752r52na"]
+[gd_scene load_steps=7 format=3 uid="uid://bm4ev752r52na"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_3epsy"]
+[ext_resource type="Texture2D" uid="uid://d0etiq6636aq5" path="res://resources/grabber.tres" id="2_djg7d"]
 [ext_resource type="PackedScene" uid="uid://oloj7yewcqua" path="res://scenes/sweeper_board.tscn" id="2_m0fe3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccckk"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6lmo3"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckn46"]
+bg_color = Color(1, 1, 1, 1)
 
 [node name="Game" type="HBoxContainer"]
 anchors_preset = 15
@@ -24,12 +34,15 @@ vertical_alignment = 1
 
 [node name="RowSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_icons/grabber = ExtResource("2_djg7d")
+theme_override_icons/grabber_highlight = ExtResource("2_djg7d")
+theme_override_icons/grabber_disabled = ExtResource("2_djg7d")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ccckk")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
 min_value = 8.0
 max_value = 24.0
 value = 8.0
-
-[node name="Spacer" type="Label" parent="VBoxContainer"]
-layout_mode = 2
 
 [node name="ColumnLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -39,12 +52,15 @@ vertical_alignment = 1
 
 [node name="ColumnSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_icons/grabber = ExtResource("2_djg7d")
+theme_override_icons/grabber_highlight = ExtResource("2_djg7d")
+theme_override_icons/grabber_disabled = ExtResource("2_djg7d")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ccckk")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
 min_value = 8.0
 max_value = 24.0
 value = 8.0
-
-[node name="Spacer2" type="Label" parent="VBoxContainer"]
-layout_mode = 2
 
 [node name="MinesLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -54,16 +70,25 @@ vertical_alignment = 1
 
 [node name="MinesSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_icons/grabber = ExtResource("2_djg7d")
+theme_override_icons/grabber_highlight = ExtResource("2_djg7d")
+theme_override_icons/grabber_disabled = ExtResource("2_djg7d")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ccckk")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
 min_value = 8.0
 max_value = 64.0
 value = 8.0
 
-[node name="Spacer3" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-
 [node name="StartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Start"
+
+[node name="TimeLeftLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2
