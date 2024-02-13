@@ -3,7 +3,7 @@ class_name RunData
 var total_score : int = 0
 var num_lives : int = 3
 
-var current_level : int = 11
+var current_level : int = 1
 
 func get_rows() -> int:
 	var rows = 5 + current_level
