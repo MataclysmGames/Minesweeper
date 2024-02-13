@@ -1,83 +1,59 @@
 class_name Game
-extends HBoxContainer
+extends Control
 
-@onready var row_label : Label = $VBoxContainer/RowLabel
-@onready var row_slider : HSlider = $VBoxContainer/RowSlider
-@onready var column_label : Label = $VBoxContainer/ColumnLabel
-@onready var column_slider : HSlider = $VBoxContainer/ColumnSlider
-@onready var mines_label : Label = $VBoxContainer/MinesLabel
-@onready var mines_slider : HSlider = $VBoxContainer/MinesSlider
-@onready var start_button = $VBoxContainer/StartButton
-@onready var time_left_label = $VBoxContainer/TimeLeftLabel
-@onready var score_label = $VBoxContainer/ScoreLabel
-@onready var exit_button = $VBoxContainer/ExitButton
+@onready var time_left_label = $MainContainer/InfoContainer/TimeLabel
+@onready var score_label = $MainContainer/InfoContainer/ScoreLabel
+@onready var lives_label = $MainContainer/InfoContainer/LivesLabel
+@onready var level_label = $MainContainer/InfoContainer/LevelLabel
 
-@onready var sweeper_board : SweeperBoard = $CenterContainer/SweeperBoard
+@onready var sweeper_board : SweeperBoard = $MainContainer/SweeperBoard
 
 var timer : Timer
-var time_started : int = -1
-var time_finished : int = -1
-var total_score : int = 0
+var run_data : RunData
 
 func _ready():
-	row_slider.value_changed.connect(update_row_label)
-	update_row_label(row_slider.value)
-	column_slider.value_changed.connect(update_column_label)
-	update_column_label(column_slider.value)
-	mines_slider.value_changed.connect(update_mines_label)
-	update_mines_label(mines_slider.value)
-	
-	start_button.pressed.connect(start)
-	exit_button.pressed.connect(exit_game)
-	sweeper_board.board_cleared.connect(on_board_cleared)
-	sweeper_board.board_failed.connect(on_board_failed)
-	
-	sweeper_board.hide()
+	sweeper_board.board_cleared.connect(progress_level)
+	sweeper_board.board_failed.connect(lose_life)
 	timer = Timer.new()
 	timer.one_shot = true
 	timer.autostart = false
-	timer.timeout.connect(on_timeout)
+	timer.timeout.connect(lose_life)
 	add_child(timer)
-	
+	run_data = RunData.new()
+	start()
+
 func _process(_delta):
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 	time_left_label.text = get_time_left_text()
-	score_label.text = "Score: %d" % [total_score]
+	score_label.text = "Score: %d" % [run_data.total_score]
+	lives_label.text = "Lives: %d" % [run_data.num_lives]
+	level_label.text = "Level: %d" % [run_data.current_level]
 
-func update_row_label(value : float):
-	row_label.text = "%d Rows" % value
-
-func update_column_label(value : float):
-	column_label.text = "%d Columns" % value
-	
-func update_mines_label(value : float):
-	mines_label.text = "%d Mines" % value
-	
 func start():
+	sweeper_board.hide()
+	sweeper_board.initialize_with_run_data(run_data)
 	sweeper_board.show()
-	sweeper_board.initialize(column_slider.value, row_slider.value, mines_slider.value)
-	timer.wait_time = mines_slider.value * 7.5
+	timer.wait_time = 120
 	timer.start()
 
-func on_board_cleared():
+func progress_level():
 	var seconds_remaining = timer.time_left
-	var score = pow(mines_slider.value * 2, 3) + (seconds_remaining * seconds_remaining * 3)
-	total_score += score
-	reset()
+	var score = seconds_remaining * seconds_remaining * 3
+	run_data.total_score += score
+	run_data.current_level += 1
+	start()
 
-func on_board_failed():
-	total_score = 0
-	reset()
+func lose_life():
+	run_data.num_lives -= 1
+	if run_data.num_lives <= 0:
+		game_over()
+	else:
+		start()
 
-func on_timeout():
-	total_score = 0
-	reset()
-
-func reset():
-	timer.stop()
-	sweeper_board.hide()
-	sweeper_board.initialize(column_slider.value, row_slider.value, mines_slider.value)
+func game_over():
+	print("Run ended at level %d with score : %d" % [run_data.current_level, run_data.total_score])
+	get_tree().change_scene_to_file("res://scenes/title.tscn")
 	
 func get_time_left_text():
 	if timer.is_stopped():
@@ -85,6 +61,3 @@ func get_time_left_text():
 	var seconds_remaining = timer.time_left
 	var minutes_remaining : int = seconds_remaining / 60
 	return "%02d:%02.3f" % [minutes_remaining, seconds_remaining - (minutes_remaining * 60)]
-
-func exit_game():
-	get_tree().quit()

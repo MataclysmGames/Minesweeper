@@ -1,19 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bm4ev752r52na"]
+[gd_scene load_steps=3 format=3 uid="uid://bm4ev752r52na"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_3epsy"]
-[ext_resource type="Texture2D" uid="uid://d0etiq6636aq5" path="res://resources/grabber.tres" id="2_djg7d"]
 [ext_resource type="PackedScene" uid="uid://oloj7yewcqua" path="res://scenes/sweeper_board.tscn" id="2_m0fe3"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ccckk"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6lmo3"]
-bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckn46"]
-bg_color = Color(1, 1, 1, 1)
-
-[node name="Game" type="HBoxContainer"]
+[node name="Game" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -21,83 +12,50 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3epsy")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-size_flags_horizontal = 0
+[node name="MainContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="RowLabel" type="Label" parent="VBoxContainer"]
+[node name="InfoContainer" type="HBoxContainer" parent="MainContainer"]
+custom_minimum_size = Vector2(640, 20)
 layout_mode = 2
-text = "Rows"
+size_flags_horizontal = 4
+size_flags_vertical = 0
+alignment = 1
+
+[node name="TimeLabel" type="Label" parent="MainContainer/InfoContainer"]
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Time"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="RowSlider" type="HSlider" parent="VBoxContainer"]
+[node name="ScoreLabel" type="Label" parent="MainContainer/InfoContainer"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-theme_override_icons/grabber = ExtResource("2_djg7d")
-theme_override_icons/grabber_highlight = ExtResource("2_djg7d")
-theme_override_icons/grabber_disabled = ExtResource("2_djg7d")
-theme_override_styles/slider = SubResource("StyleBoxFlat_ccckk")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
-min_value = 8.0
-max_value = 24.0
-value = 14.0
-
-[node name="ColumnLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Columns"
+theme_override_font_sizes/font_size = 12
+text = "Score"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="ColumnSlider" type="HSlider" parent="VBoxContainer"]
+[node name="LivesLabel" type="Label" parent="MainContainer/InfoContainer"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-theme_override_icons/grabber = ExtResource("2_djg7d")
-theme_override_icons/grabber_highlight = ExtResource("2_djg7d")
-theme_override_icons/grabber_disabled = ExtResource("2_djg7d")
-theme_override_styles/slider = SubResource("StyleBoxFlat_ccckk")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
-min_value = 8.0
-max_value = 24.0
-value = 14.0
-
-[node name="MinesLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Mines"
+theme_override_font_sizes/font_size = 12
+text = "Lives"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="MinesSlider" type="HSlider" parent="VBoxContainer"]
+[node name="LevelLabel" type="Label" parent="MainContainer/InfoContainer"]
+custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
-theme_override_icons/grabber = ExtResource("2_djg7d")
-theme_override_icons/grabber_highlight = ExtResource("2_djg7d")
-theme_override_icons/grabber_disabled = ExtResource("2_djg7d")
-theme_override_styles/slider = SubResource("StyleBoxFlat_ccckk")
-theme_override_styles/grabber_area = SubResource("StyleBoxFlat_6lmo3")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_ckn46")
-min_value = 8.0
-max_value = 64.0
-value = 25.0
+theme_override_font_sizes/font_size = 12
+text = "Level"
+horizontal_alignment = 1
 
-[node name="StartButton" type="Button" parent="VBoxContainer"]
+[node name="SweeperBoard" parent="MainContainer" instance=ExtResource("2_m0fe3")]
+custom_minimum_size = Vector2(640, 340)
 layout_mode = 2
-text = "Start"
-
-[node name="TimeLeftLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="ScoreLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="ExitButton" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-text = "Exit"
-
-[node name="CenterContainer" type="CenterContainer" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-use_top_left = true
-
-[node name="SweeperBoard" parent="CenterContainer" instance=ExtResource("2_m0fe3")]
-position = Vector2(308, 15)
+size_flags_horizontal = 1

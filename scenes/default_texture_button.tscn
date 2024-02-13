@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dhfxmhxr2hy4y"]
+[gd_scene load_steps=3 format=3 uid="uid://dhfxmhxr2hy4y"]
 
 [ext_resource type="Texture2D" uid="uid://bl66qlddsyftx" path="res://assets/default-cell.png" id="1_nnqic"]
+[ext_resource type="Texture2D" uid="uid://cjgu4rjg5txeg" path="res://assets/cell-hover.png" id="2_qior1"]
 
 [node name="DefaultTextureButton" type="TextureButton"]
 anchors_preset = 8
@@ -16,4 +17,5 @@ grow_horizontal = 2
 grow_vertical = 2
 button_mask = 3
 texture_normal = ExtResource("1_nnqic")
+texture_hover = ExtResource("2_qior1")
 stretch_mode = 0

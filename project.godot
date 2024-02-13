@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Minesweeper"
-run/main_scene="res://scenes/game.tscn"
+run/main_scene="res://scenes/title.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
 
@@ -29,7 +29,7 @@ gdscript/warnings/narrowing_conversion=0
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/size/mode=4
+window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [input]
