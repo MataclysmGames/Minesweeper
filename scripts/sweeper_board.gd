@@ -29,16 +29,20 @@ var textures : Array[Resource] = [
 	preload("res://assets/cell-8.png"),
 ]
 
+var run_data : RunData
 var grid_data : Array[CellData]
 var adjacent_cell_offsets : Array
 var last_mouse_action : String = "left"
 var reject_input : bool = false
 var undiscovered_cell_count : int = 0
+var discover_tween : Tween
 
-func _ready():
-	pass
+func _process(_delta):
+	if undiscovered_cell_count == 0 and not reject_input:
+		win()
 
 func initialize_with_run_data(run_data : RunData):
+	self.run_data = run_data
 	num_columns = run_data.get_columns()
 	num_rows = run_data.get_rows()
 	num_mines = run_data.get_mines()
@@ -66,15 +70,19 @@ func _input(event : InputEvent):
 
 func win():
 	reject_input = true
-	var tween = create_tween()
-	tween.tween_property(grid_container, "modulate", Color(0, 1, 0, 1), 1.0)
-	tween.tween_callback(func(): board_cleared.emit())
+	board_cleared.emit()
 
-func lose():
-	reject_input = true
-	var tween = create_tween()
-	tween.tween_property(grid_container, "modulate", Color(1, 0, 0, 1), 1.0)
-	tween.tween_callback(func(): board_failed.emit())
+func hit_mine():
+	run_data.num_lives -= 1
+	if run_data.num_lives <= 0:
+		reject_input = true
+		for cell in grid_data:
+			cell.button.set_deferred("disabled", true)
+			if cell.value == -1:
+				cell.button.texture_normal = mine_texture
+			else:
+				cell.button.texture_normal = textures[cell.value]
+		board_failed.emit()
 
 func generate_grid_data():
 	# Create grid with buttons
@@ -110,13 +118,12 @@ func on_button_pressed(index : int):
 				button.set_deferred("disabled", true)
 				button.focus_mode = Control.FOCUS_NONE
 				button.texture_normal = mine_texture
-				lose()
+				hit_mine()
 			else:
-				discover(cell_data)
-				if undiscovered_cell_count == 0:
-					win()
+				discover_tween = create_tween()
+				discover_bfs(cell_data)
 				
-	elif last_mouse_action == "right":
+	elif last_mouse_action == "right" and not run_data.commando_enabled:
 		if not cell_data.flagged:
 			button.texture_normal = flagged_texture
 			button.texture_hover = null
@@ -126,18 +133,32 @@ func on_button_pressed(index : int):
 			button.texture_hover = hover_texture
 			cell_data.flagged = false
 
-func discover(cell_data : CellData):
-	if cell_data.activated:
-		return
-	undiscovered_cell_count -= 1
-	cell_data.activated = true
-	cell_data.button.set_deferred("disabled", true)
-	cell_data.button.focus_mode = Control.FOCUS_NONE
-	cell_data.button.texture_normal = textures[cell_data.value]
-	var adjacent_cells = get_adjacent_cells(cell_data.index)
-	if cell_data.value == 0:
-		for next_index in adjacent_cells:
-			discover(grid_data[next_index])
+func discover_bfs(cell_data : CellData):
+	var found_cells : Array[CellData] = []
+	found_cells.append(cell_data)
+	var index = 0
+	while index < len(found_cells):
+		var curr_cell = found_cells[index]
+		curr_cell.activated = true
+		if curr_cell.value == 0:
+			var adjacent_cells = get_adjacent_cells(curr_cell.index)
+			for next_index in adjacent_cells:
+				var next_cell = grid_data[next_index]
+				if not next_cell.activated:
+					next_cell.activated = true
+					found_cells.append(next_cell)
+		index += 1
+		
+	for cell in found_cells:
+		cell.button.set_deferred("disabled", true)
+		cell.button.focus_mode = Control.FOCUS_NONE
+		#cell.button.texture_normal = textures[cell.value]
+		discover_tween.tween_callback(cell.button.set_texture_normal.bind(textures[cell.value]))
+		discover_tween.tween_callback(decrement_undiscovered_cells)
+		discover_tween.tween_interval(0.0025)
+
+func decrement_undiscovered_cells(amount : int = 1):
+	undiscovered_cell_count -= amount
 
 func calculate_value_for_cell(index : int) -> int:
 	var mine_count = 0
@@ -146,8 +167,25 @@ func calculate_value_for_cell(index : int) -> int:
 		if grid_data[next_index].value == -1:
 			mine_count += 1
 	return mine_count
-
+	
 func get_adjacent_cells(index : int) -> Array[int]:
+	if run_data.wrap_around_enabled:
+		return get_adjacent_cells_with_wrap(index)
+	else:
+		return get_adjacent_cells_no_wrap(index)
+
+func get_adjacent_cells_no_wrap(index : int) -> Array[int]:
+	var adjacent_cells : Array[int] = []
+	var coords = coords_from_index(index)
+	for offset in adjacent_cell_offsets:
+		var next_col = offset[0] + coords[0]
+		var next_row = offset[1] + coords[1]
+		if 0 <= next_col and next_col < num_columns and 0 <= next_row and next_row < num_rows:
+			var next_index = index_from_coords([next_col, next_row])
+			adjacent_cells.append(next_index)
+	return adjacent_cells
+
+func get_adjacent_cells_with_wrap(index : int) -> Array[int]:
 	var adjacent_cells : Array[int] = []
 	var coords = coords_from_index(index)
 	for offset in adjacent_cell_offsets:

@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://bm4ev752r52na"]
+[gd_scene load_steps=6 format=3 uid="uid://bm4ev752r52na"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_3epsy"]
 [ext_resource type="PackedScene" uid="uid://oloj7yewcqua" path="res://scenes/sweeper_board.tscn" id="2_m0fe3"]
+[ext_resource type="Texture2D" uid="uid://baxyuccrm4ddv" path="res://assets/cell-1.png" id="3_2qcfn"]
+[ext_resource type="Texture2D" uid="uid://c72kgqayi16h0" path="res://assets/cell-2.png" id="4_4gimh"]
+[ext_resource type="Texture2D" uid="uid://bxjjnlel1ef42" path="res://assets/cell-3.png" id="5_36w17"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -59,3 +62,121 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(640, 340)
 layout_mode = 2
 size_flags_horizontal = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -125.0
+offset_right = 125.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(150, 150)
+
+[node name="Panel" type="Panel" parent="PanelContainer"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+
+[node name="LevelUpContainer" type="VBoxContainer" parent="PanelContainer"]
+self_modulate = Color(0, 0, 0, 1)
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HeaderLabel" type="Label" parent="PanelContainer/LevelUpContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 20
+text = "Level Cleared!"
+horizontal_alignment = 1
+
+[node name="GainedPointsContainer" type="HBoxContainer" parent="PanelContainer/LevelUpContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PointsLabel" type="Label" parent="PanelContainer/LevelUpContainer/GainedPointsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.686275, 0.686275, 0.686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "Level Score"
+horizontal_alignment = 1
+
+[node name="PointsValueLabel" type="Label" parent="PanelContainer/LevelUpContainer/GainedPointsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "7777"
+horizontal_alignment = 1
+
+[node name="TotalPointsContainer" type="HBoxContainer" parent="PanelContainer/LevelUpContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="PointsLabel" type="Label" parent="PanelContainer/LevelUpContainer/TotalPointsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.686275, 0.686275, 0.686275, 1)
+theme_override_font_sizes/font_size = 12
+text = "Total Score"
+horizontal_alignment = 1
+
+[node name="PointsValueLabel" type="Label" parent="PanelContainer/LevelUpContainer/TotalPointsContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 12
+text = "7777"
+horizontal_alignment = 1
+
+[node name="Rewards" type="VBoxContainer" parent="PanelContainer/LevelUpContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Container" type="HBoxContainer" parent="PanelContainer/LevelUpContainer/Rewards"]
+layout_mode = 2
+size_flags_vertical = 8
+
+[node name="Button1" type="Button" parent="PanelContainer/LevelUpContainer/Rewards/Container"]
+custom_minimum_size = Vector2(50, 60)
+layout_mode = 2
+size_flags_horizontal = 7
+theme_override_font_sizes/font_size = 10
+icon = ExtResource("3_2qcfn")
+
+[node name="Button2" type="Button" parent="PanelContainer/LevelUpContainer/Rewards/Container"]
+custom_minimum_size = Vector2(50, 60)
+layout_mode = 2
+size_flags_horizontal = 7
+theme_override_font_sizes/font_size = 10
+icon = ExtResource("4_4gimh")
+
+[node name="Button3" type="Button" parent="PanelContainer/LevelUpContainer/Rewards/Container"]
+custom_minimum_size = Vector2(50, 60)
+layout_mode = 2
+size_flags_horizontal = 7
+theme_override_font_sizes/font_size = 10
+icon = ExtResource("5_36w17")
+
+[node name="Explanation" type="TextEdit" parent="PanelContainer/LevelUpContainer/Rewards"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 10
+text = "The quick brown fox jumps overthelazy dog quickly and then The quick brown fox jumps overthelazy dog quickly and then The quick brown fox jumps overthelazy dog quickly and then "
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
