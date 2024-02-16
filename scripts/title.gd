@@ -5,6 +5,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	BackgroundAudio.play_main_theme(0.66)
 	exit_button.pressed.connect(exit_game)
 	start_button.pressed.connect(start_game)
 

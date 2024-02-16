@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameInit="*res://scripts/game_init.gd"
+BackgroundAudio="*res://scenes/background_audio.tscn"
 
 [debug]
 

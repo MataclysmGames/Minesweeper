@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b67h2goutjtiv"]
+
+[ext_resource type="Script" path="res://scripts/run_summary.gd" id="1_e42sy"]
+
+[node name="RunSummary" type="Node2D"]
+script = ExtResource("1_e42sy")

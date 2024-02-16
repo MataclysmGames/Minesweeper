@@ -29,6 +29,18 @@ var textures : Array[Resource] = [
 	preload("res://assets/cell-8.png"),
 ]
 
+var just_color_textures : Array[Resource] = [
+	preload("res://assets/cell-0.png"),
+	preload("res://assets/cell-color-1.png"),
+	preload("res://assets/cell-color-2.png"),
+	preload("res://assets/cell-color-3.png"),
+	preload("res://assets/cell-color-4.png"),
+	preload("res://assets/cell-color-5.png"),
+	preload("res://assets/cell-color-6.png"),
+	preload("res://assets/cell-color-7.png"),
+	preload("res://assets/cell-color-8.png"),
+]
+
 var run_data : RunData
 var grid_data : Array[CellData]
 var adjacent_cell_offsets : Array
@@ -40,6 +52,9 @@ var discover_tween : Tween
 func _process(_delta):
 	if undiscovered_cell_count == 0 and not reject_input:
 		win()
+
+func _ready():
+	initialize_with_run_data(RunData.create_casual())
 
 func initialize_with_run_data(run_data : RunData):
 	self.run_data = run_data
@@ -81,7 +96,7 @@ func hit_mine():
 			if cell.value == -1:
 				cell.button.texture_normal = mine_texture
 			else:
-				cell.button.texture_normal = textures[cell.value]
+				cell.button.texture_normal = get_cell_texture(cell.value)
 		board_failed.emit()
 
 func generate_grid_data():
@@ -152,10 +167,15 @@ func discover_bfs(cell_data : CellData):
 	for cell in found_cells:
 		cell.button.set_deferred("disabled", true)
 		cell.button.focus_mode = Control.FOCUS_NONE
-		#cell.button.texture_normal = textures[cell.value]
-		discover_tween.tween_callback(cell.button.set_texture_normal.bind(textures[cell.value]))
+		discover_tween.tween_callback(cell.button.set_texture_normal.bind(get_cell_texture(cell.value)))
 		discover_tween.tween_callback(decrement_undiscovered_cells)
 		discover_tween.tween_interval(0.0025)
+
+func get_cell_texture(value : int) -> Resource:
+	if run_data.just_color_enabled:
+		return just_color_textures[value]
+	else:
+		return textures[value]
 
 func decrement_undiscovered_cells(amount : int = 1):
 	undiscovered_cell_count -= amount

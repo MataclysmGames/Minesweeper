@@ -9,6 +9,9 @@ anchors_preset = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_sb4r0")
+num_columns = 10
+num_rows = 5
+num_mines = 2
 config_button = ExtResource("2_he50q")
 
 [node name="GridContainer" type="GridContainer" parent="."]
@@ -20,7 +23,7 @@ offset_right = 640.0
 offset_bottom = 335.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.25, 1.25)
+scale = Vector2(2, 2)
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
-columns = 8
+columns = 10

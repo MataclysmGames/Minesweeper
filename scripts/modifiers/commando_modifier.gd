@@ -3,4 +3,4 @@ extends Modifier
 
 func _init():
 	title = "Commando"
-	explanation = "Numbers of mines reduced by 3.\nCan no longer flag cells."
+	explanation = "Reduce number of mines by 3.\nCan no longer flag cells."
