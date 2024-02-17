@@ -16,21 +16,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_oojlx")
 
-[node name="CenterContainer" type="VBoxContainer" parent="."]
+[node name="TitleContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -103.5
+offset_left = -104.5
 offset_top = -36.0
-offset_right = 103.5
+offset_right = 104.5
 offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GameNameLabel" type="Label" parent="CenterContainer"]
+[node name="GameNameLabel" type="Label" parent="TitleContainer"]
 layout_mode = 2
 theme = ExtResource("2_8wane")
 theme_override_colors/font_outline_color = Color(0.12549, 0.129412, 0.129412, 1)
@@ -40,7 +40,7 @@ text = "Minesweeper"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AuthorLabel" type="Label" parent="CenterContainer"]
+[node name="AuthorLabel" type="Label" parent="TitleContainer"]
 layout_mode = 2
 theme = ExtResource("2_8wane")
 theme_override_colors/font_outline_color = Color(0.12549, 0.129412, 0.129412, 1)
@@ -49,7 +49,102 @@ text = "By Matthew Erickson"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="DifficultySelectContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -264.0
+offset_top = -30.0
+offset_right = 264.0
+offset_bottom = 102.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="EasyContainer" type="VBoxContainer" parent="DifficultySelectContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="DifficultySelectContainer/EasyContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("2_8wane")
+text = "Easy"
+
+[node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/EasyContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_8wane")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center][color=green]Cleared![/color][p]Best Score: 1234567"
+fit_content = true
+autowrap_mode = 0
+
+[node name="NormalContainer" type="VBoxContainer" parent="DifficultySelectContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="DifficultySelectContainer/NormalContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("2_8wane")
+text = "Normal"
+
+[node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/NormalContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_8wane")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center][color=green]Cleared![/color][p]Best Score: 1234567"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HardContainer" type="VBoxContainer" parent="DifficultySelectContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="DifficultySelectContainer/HardContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("2_8wane")
+text = "Hard"
+
+[node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/HardContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_8wane")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center][color=green]Cleared![/color][p]Best Score: 1234567"
+fit_content = true
+autowrap_mode = 0
+
+[node name="NightmareContainer" type="VBoxContainer" parent="DifficultySelectContainer"]
+custom_minimum_size = Vector2(120, 120)
+layout_mode = 2
+
+[node name="Button" type="Button" parent="DifficultySelectContainer/NightmareContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+theme = ExtResource("2_8wane")
+text = "Nightmare"
+
+[node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/NightmareContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("2_8wane")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center][color=green]Cleared![/color][p]Best Score: 1234567"
+fit_content = true
+autowrap_mode = 0
+
+[node name="TitleButtonsContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -64,17 +159,31 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/separation = 32
 
-[node name="ExitButton" type="Button" parent="HBoxContainer"]
+[node name="ExitButton" type="Button" parent="TitleButtonsContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 theme = ExtResource("2_8wane")
 text = "Exit"
 
-[node name="StartButton" type="Button" parent="HBoxContainer"]
+[node name="StartButton" type="Button" parent="TitleButtonsContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 theme = ExtResource("2_8wane")
 text = "Start"
+
+[node name="DifficultySelectButtonsContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 80.0
+offset_bottom = 46.0
+theme_override_constants/separation = 32
+
+[node name="BackButton" type="Button" parent="DifficultySelectButtonsContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+theme = ExtResource("2_8wane")
+text = "Back"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
 z_index = -2

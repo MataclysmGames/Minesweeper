@@ -54,7 +54,7 @@ func _process(_delta):
 		win()
 
 func _ready():
-	initialize_with_run_data(RunData.create_casual())
+	initialize_with_run_data(RunData.create_normal())
 
 func initialize_with_run_data(run_data : RunData):
 	self.run_data = run_data

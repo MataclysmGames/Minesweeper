@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Minesweeper"
 run/main_scene="res://scenes/title.tscn"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.2", "Mobile")
 run/max_fps=60
 config/icon="res://icon.svg"
@@ -20,6 +21,8 @@ config/icon="res://icon.svg"
 
 GameInit="*res://scripts/game_init.gd"
 BackgroundAudio="*res://scenes/background_audio.tscn"
+SaveData="*res://scripts/save_data.gd"
+Global="*res://scripts/global.gd"
 
 [debug]
 

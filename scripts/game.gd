@@ -40,7 +40,7 @@ func _ready():
 	timer.autostart = false
 	timer.timeout.connect(lose_life)
 	add_child(timer)
-	run_data = RunData.create_casual()
+	run_data = RunData.create_by_difficulty()
 	start()
 
 func _process(_delta):
@@ -104,6 +104,11 @@ func progress_level():
 		reward_button_2.text = rewards[1].title
 		reward_button_3.text = rewards[2].title
 		tween.tween_callback(rewards_container.show)
+	
+	tween.tween_callback(update_save_data)
+	
+func update_save_data():
+	SaveData.save_run_if_better(run_data, Global.current_difficulty)
 
 func get_rewards() -> Array[Modifier]:
 	var possible_rewards : Array[Modifier]
@@ -114,8 +119,8 @@ func get_rewards() -> Array[Modifier]:
 	if not run_data.just_color_enabled:
 		possible_rewards.append(JustColorModifier.new())
 	
-	possible_rewards.append(IncreaseTimeModifier.new(10, 15))
-	possible_rewards.append(AddLifeModifier.new(randi_range(1, 2)))
+	possible_rewards.append(IncreaseTimeModifier.new(5, 10))
+	possible_rewards.append(AddLifeModifier.new())
 	possible_rewards.append(IncreaseScoreModifier.new())
 	
 	possible_rewards.shuffle()
