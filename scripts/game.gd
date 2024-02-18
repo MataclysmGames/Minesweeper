@@ -145,10 +145,12 @@ func lose_life():
 		start()
 
 func game_over():
+	SaveData.record_run(run_data)
 	print("Run ended at level %d with score : %d" % [run_data.current_level, run_data.total_score])
 	get_tree().change_scene_to_file("res://scenes/title.tscn")
 	
 func on_view_summary():
+	SaveData.record_run(run_data)
 	get_tree().change_scene_to_file("res://scenes/title.tscn")
 
 func get_time_left_text() -> String:

@@ -5,6 +5,7 @@ extends Resource
 @export var current_level : int = 0
 @export var max_level : int = 30
 @export var total_score : int = 0
+@export var difficulty : String
 
 # Configuration
 var num_lives : int = 3
@@ -53,7 +54,7 @@ func get_mines() -> int:
 func get_allowed_seconds() -> float:
 	var seconds = base_time + extra_time
 	if just_color_enabled:
-		seconds *= 1.5
+		seconds *= 1.2
 	return seconds
 
 func apply_modifier(modifier : Modifier):
@@ -89,19 +90,21 @@ static func create_by_difficulty() -> RunData:
 
 static func create_easy() -> RunData:
 	var run_data := RunData.new()
+	run_data.difficulty = "Easy"
 	run_data.num_lives = 5
-	run_data.progress_mines = 2.2
+	run_data.progress_mines = 2.0
 	run_data.base_time = 90
 	run_data.progress_time = 0
 	run_data.max_level = 10
-	run_data.progress_columns = 1.2
-	run_data.progress_rows = 0.6
+	run_data.progress_columns = 1.4
+	run_data.progress_rows = 0.7
 	return run_data
 
-static func create_normal() -> RunData: #13899
+static func create_normal() -> RunData:
 	var run_data := RunData.new()
-	run_data.num_lives = 4
-	run_data.progress_mines = 2.3
+	run_data.difficulty = "Normal"
+	run_data.num_lives = 5
+	run_data.progress_mines = 2.2
 	run_data.base_time = 60
 	run_data.progress_time = 0
 	run_data.max_level = 15
@@ -111,8 +114,9 @@ static func create_normal() -> RunData: #13899
 
 static func create_hard() -> RunData:
 	var run_data := RunData.new()
-	run_data.num_lives = 3
-	run_data.progress_mines = 2.4
+	run_data.difficulty = "Hard"
+	run_data.num_lives = 4
+	run_data.progress_mines = 2.6
 	run_data.base_time = 45
 	run_data.progress_time = 0
 	run_data.max_level = 20
@@ -122,8 +126,9 @@ static func create_hard() -> RunData:
 
 static func create_nightmare() -> RunData:
 	var run_data := RunData.new()
+	run_data.difficulty = "Nightmare"
 	run_data.num_lives = 3
-	run_data.progress_mines = 2.5
+	run_data.progress_mines = 2.8
 	run_data.base_time = 30
 	run_data.progress_time = 0
 	run_data.max_level = 30

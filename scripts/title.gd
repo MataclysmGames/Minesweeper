@@ -22,6 +22,7 @@ const tween_duration : float = 0.6
 @onready var nightmare_label : RichTextLabel = $DifficultySelectContainer/NightmareContainer/Label
 
 func _ready():
+	SaveData.reload()
 	BackgroundAudio.play_main_theme(0.66)
 	exit_button.pressed.connect(exit_game)
 	start_button.pressed.connect(show_difficulty_select)
@@ -71,5 +72,5 @@ func format_run(run_data : RunData) -> String:
 	if not run_data:
 		return "[center]No save data"
 	if run_data.current_level == run_data.max_level:
-		return "[center][color=green]Cleared![/color][p][center]Best Score: %d" % [run_data.total_score]
+		return "[center][color=green]Full Clear![/color][p][center]Best Score: %d" % [run_data.total_score]
 	return "[center][color=orange]Cleared %d/%d[/color][p][center]Best Score: %d" % [run_data.current_level, run_data.max_level, run_data.total_score]

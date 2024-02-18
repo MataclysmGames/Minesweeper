@@ -6,7 +6,10 @@ var save_resource : SaveDataResource
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	save_resource = ResourceLoader.load(save_resource_name) as SaveDataResource
+	reload()
+
+func reload():
+	save_resource = ResourceLoader.load(save_resource_name, "", ResourceLoader.CACHE_MODE_IGNORE) as SaveDataResource
 	if not save_resource:
 		save_resource = SaveDataResource.new()
 		save_to_disk()
@@ -61,3 +64,7 @@ func run_is_better(saved_run : RunData, current_run : RunData) -> bool:
 	if current_run.current_level == saved_run.current_level:
 		return current_run.total_score > saved_run.total_score
 	return false
+	
+func record_run(run_data : RunData):
+	save_resource.run_history.append(run_data)
+	save_to_disk()
