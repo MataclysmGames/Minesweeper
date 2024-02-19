@@ -74,7 +74,7 @@ func apply_modifier(modifier : Modifier):
 	elif modifier is IncreaseScoreModifier:
 		score_multiplier *= 1 + (modifier.percent_increase / 100.0)
 	elif modifier is CommandoModifier and not commando_enabled:
-		extra_mines -= 3
+		extra_mines -= 2
 		commando_enabled = true
 	elif modifier is WrapAroundModifier:
 		wrap_around_enabled = true
