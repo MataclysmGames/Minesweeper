@@ -147,7 +147,9 @@ func get_rewards() -> Array[Modifier]:
 		possible_rewards.append(WrapAroundModifier.new())
 	if not run_data.just_color_enabled:
 		possible_rewards.append(JustColorModifier.new())
-	
+	if not run_data.first_one_is_free:
+		possible_rewards.append(FirstOneIsFreeModifier.new())
+
 	possible_rewards.append(IncreaseTimeModifier.new(5, 10))
 	possible_rewards.append(AddLifeModifier.new())
 	possible_rewards.append(IncreaseScoreModifier.new())
@@ -175,6 +177,7 @@ func lose_life():
 
 func game_over():
 	# Didn't finish the level
+	run_data.set_end_time()
 	run_data.current_level -= 1
 	SaveData.record_run(run_data)
 	print("Run ended at level %d with score : %d" % [run_data.current_level, run_data.total_score])

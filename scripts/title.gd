@@ -52,6 +52,7 @@ func _ready():
 	background_particles.emitting = true
 
 func exit_game():
+	SaveData.save_to_disk()
 	get_tree().quit()
 
 func show_title():

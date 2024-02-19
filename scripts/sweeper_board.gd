@@ -49,6 +49,7 @@ var last_mouse_action : String = "left"
 var reject_input : bool = false
 var undiscovered_cell_count : int = 0
 var discover_tween : Tween
+var cells_selected : int = 0
 
 func _process(_delta):
 	if undiscovered_cell_count == 0 and not reject_input:
@@ -65,6 +66,8 @@ func initialize_with_run_data(run_data : RunData):
 	num_columns = run_data.get_columns()
 	num_rows = run_data.get_rows()
 	num_mines = run_data.get_mines()
+	print("%dx%d with %d mines" % [num_rows, num_columns, num_mines])
+	print("Mine ratio: %f" % ((100.0 * num_mines) / (num_columns * num_rows)))
 	var x_scale : float = 18.0 / num_columns
 	var y_scale : float = 9.0 / num_rows
 	var xy_scale : float = min(x_scale, y_scale)
@@ -82,6 +85,7 @@ func initialize_with_run_data(run_data : RunData):
 	]
 	generate_grid_data()
 	reject_input = false
+	cells_selected = 0
 
 func _input(event : InputEvent):
 	if event is InputEventMouseButton:
@@ -141,6 +145,14 @@ func on_button_pressed(index : int):
 	var cell_data : CellData = grid_data[index]
 	var button = cell_data.button
 	if last_mouse_action == "left":
+		if cells_selected == 0 and cell_data.value == -1 and run_data.first_one_is_free:
+			print("First one is free")
+			undiscovered_cell_count += 1
+			cell_data.value = calculate_value_for_cell(cell_data.index)
+			for i in range(num_columns * num_rows):
+				if grid_data[i].value != -1:
+					grid_data[i].value = calculate_value_for_cell(i)
+			
 		if not cell_data.activated and not cell_data.flagged:
 			if cell_data.value == -1: # Bomb
 				button.set_deferred("disabled", true)
@@ -159,6 +171,7 @@ func on_button_pressed(index : int):
 			button.texture_normal = default_texture
 			button.texture_hover = hover_texture
 			cell_data.flagged = false
+	cells_selected += 1
 
 func discover_bfs_grouped(cell_data : CellData):
 	# Change the selected cell as a special case

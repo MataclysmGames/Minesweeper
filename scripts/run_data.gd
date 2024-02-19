@@ -19,6 +19,7 @@ var extra_mines : int = 0
 var commando_enabled : bool = false
 var wrap_around_enabled : bool = false
 var just_color_enabled : bool = false
+var first_one_is_free : bool = false
 
 var modifiers : Array[Modifier]
 
@@ -26,9 +27,7 @@ var modifiers : Array[Modifier]
 var base_time : int = 60
 var progress_time : float = 5
 
-var base_mines : int = 8
-var progress_mines : float = 2.5
-var max_mines : int = 50
+var mine_ratio : float = 0.10
 
 var base_rows : int = 8
 var progress_rows : float = 0.6
@@ -57,8 +56,9 @@ func get_columns() -> int:
 	return min(columns, max_columns)
 
 func get_mines() -> int:
-	var mines : int = base_mines + current_level * progress_mines + extra_mines
-	return min(mines, max_mines)
+	var size : int = get_rows() * get_columns()
+	var mines : int = ceil((size * mine_ratio) + extra_mines)
+	return mines
 
 func get_allowed_seconds() -> float:
 	var seconds = base_time + extra_time
@@ -80,6 +80,8 @@ func apply_modifier(modifier : Modifier):
 		wrap_around_enabled = true
 	elif modifier is JustColorModifier:
 		just_color_enabled = true
+	elif modifier is FirstOneIsFreeModifier:
+		first_one_is_free = true
 	else:
 		modifiers.append(modifier)
 
@@ -101,9 +103,8 @@ static func create_easy() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Easy"
 	run_data.num_lives = 5
-	run_data.base_mines = 4
-	run_data.progress_mines = 2.0
-	run_data.base_time = 90
+	run_data.mine_ratio = 0.07
+	run_data.base_time = 120
 	run_data.progress_time = 0
 	run_data.max_level = 10
 	run_data.progress_columns = 1.4
@@ -114,37 +115,34 @@ static func create_normal() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Normal"
 	run_data.num_lives = 5
-	run_data.base_mines = 6
-	run_data.progress_mines = 2.2
-	run_data.base_time = 60
+	run_data.mine_ratio = 0.08
+	run_data.base_time = 90
 	run_data.progress_time = 0
 	run_data.max_level = 15
-	run_data.progress_columns = 1.2
-	run_data.progress_rows = 0.6
+	run_data.progress_columns = 1.4
+	run_data.progress_rows = 0.7
 	return run_data
 
 static func create_hard() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Hard"
 	run_data.num_lives = 4
-	run_data.base_mines = 8
-	run_data.progress_mines = 2.6
-	run_data.base_time = 45
+	run_data.mine_ratio = 0.10
+	run_data.base_time = 60
 	run_data.progress_time = 0
 	run_data.max_level = 20
-	run_data.progress_columns = 1.2
-	run_data.progress_rows = 0.6
+	run_data.progress_columns = 1.4
+	run_data.progress_rows = 0.7
 	return run_data
 
 static func create_nightmare() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Nightmare"
 	run_data.num_lives = 3
-	run_data.base_mines = 8
-	run_data.progress_mines = 2.8
-	run_data.base_time = 30
+	run_data.mine_ratio = 0.12
+	run_data.base_time = 60
 	run_data.progress_time = 0
 	run_data.max_level = 30
-	run_data.progress_columns = 1.3
-	run_data.progress_rows = 0.65
+	run_data.progress_columns = 1.4
+	run_data.progress_rows = 0.7
 	return run_data
