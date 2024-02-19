@@ -10,11 +10,9 @@ func _ready():
 
 func play_main_theme(pitch : float = 1.0):
 	play_audio(main_theme, -20.0, pitch)
-	print("Pitch: %.3f" % pitch)
 
 func play_audio(audio : AudioStream, volume : float = 0.0, pitch : float = 1.0, transition_duration : float = 2.0):
 	if not audio:
-		print("Invalid audio")
 		return
 	if audio.resource_path == current_audio_resource:
 		audio_stream_player.create_tween().tween_property(audio_stream_player, "volume_db", volume, transition_duration)

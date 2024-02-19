@@ -1,11 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmwwwolg6lbrs"]
+[gd_scene load_steps=5 format=3 uid="uid://dmwwwolg6lbrs"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_oojlx"]
 [ext_resource type="Theme" uid="uid://dtli4pnsek1s0" path="res://resources/default_font.tres" id="2_8wane"]
-
-[sub_resource type="Gradient" id="Gradient_8ur3u"]
-offsets = PackedFloat32Array(0, 0.532143, 1)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+[ext_resource type="StyleBox" uid="uid://c4o8pc3rf1rt4" path="res://resources/ui_button_texture.tres" id="3_h15qp"]
+[ext_resource type="PackedScene" uid="uid://20f4c1i21gu4" path="res://scenes/background_particles.tscn" id="4_6ihcp"]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -71,7 +69,15 @@ layout_mode = 2
 [node name="Button" type="Button" parent="DifficultySelectContainer/EasyContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Easy"
 
 [node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/EasyContainer"]
@@ -91,7 +97,15 @@ layout_mode = 2
 [node name="Button" type="Button" parent="DifficultySelectContainer/NormalContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Normal"
 
 [node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/NormalContainer"]
@@ -111,7 +125,15 @@ layout_mode = 2
 [node name="Button" type="Button" parent="DifficultySelectContainer/HardContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Hard"
 
 [node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/HardContainer"]
@@ -131,7 +153,15 @@ layout_mode = 2
 [node name="Button" type="Button" parent="DifficultySelectContainer/NightmareContainer"]
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Nightmare"
 
 [node name="Label" type="RichTextLabel" parent="DifficultySelectContainer/NightmareContainer"]
@@ -162,13 +192,29 @@ theme_override_constants/separation = 32
 [node name="ExitButton" type="Button" parent="TitleButtonsContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Exit"
 
 [node name="StartButton" type="Button" parent="TitleButtonsContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Start"
 
 [node name="DifficultySelectButtonsContainer" type="HBoxContainer" parent="."]
@@ -182,37 +228,16 @@ theme_override_constants/separation = 32
 [node name="BackButton" type="Button" parent="DifficultySelectButtonsContainer"]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
+focus_mode = 0
 theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
 text = "Back"
 
-[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
-z_index = -2
-position = Vector2(320, 128)
-amount = 48
-lifetime = 6.0
-preprocess = 10.0
-emission_shape = 1
-emission_sphere_radius = 128.0
-direction = Vector2(0, 1)
-spread = 180.0
-gravity = Vector2(0, 0)
-initial_velocity_min = 75.0
-initial_velocity_max = 100.0
-angular_velocity_min = -150.0
-angular_velocity_max = 100.0
-orbit_velocity_min = -0.2
-orbit_velocity_max = 0.2
-linear_accel_min = 1.0
-linear_accel_max = 2.0
-radial_accel_min = 1.0
-radial_accel_max = 2.0
-tangential_accel_min = 1.0
-tangential_accel_max = 2.0
-damping_min = 5.0
-damping_max = 10.0
-scale_amount_min = 4.0
-scale_amount_max = 48.0
-color = Color(0, 0.454902, 0.764706, 1)
-color_ramp = SubResource("Gradient_8ur3u")
-hue_variation_min = -0.5
-hue_variation_max = 0.5
+[node name="BackgroundParticles" parent="." instance=ExtResource("4_6ihcp")]
+position = Vector2(320, 180)

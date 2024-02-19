@@ -21,6 +21,8 @@ const tween_duration : float = 0.6
 @onready var hard_label : RichTextLabel = $DifficultySelectContainer/HardContainer/Label
 @onready var nightmare_label : RichTextLabel = $DifficultySelectContainer/NightmareContainer/Label
 
+@onready var background_particles : CPUParticles2D = $BackgroundParticles
+
 func _ready():
 	SaveData.reload()
 	BackgroundAudio.play_main_theme(0.66)
@@ -46,6 +48,8 @@ func _ready():
 	normal_label.text = format_run(best_normal_run)
 	hard_label.text = format_run(best_hard_run)
 	nightmare_label.text = format_run(best_nightmare_run)
+	
+	background_particles.emitting = true
 
 func exit_game():
 	get_tree().quit()
@@ -71,6 +75,6 @@ func start_game(difficulty : Global.RunDifficulty):
 func format_run(run_data : RunData) -> String:
 	if not run_data:
 		return "[center]No save data"
-	if run_data.current_level == run_data.max_level:
+	if run_data.current_level >= run_data.max_level:
 		return "[center][color=green]Full Clear![/color][p][center]Best Score: %d" % [run_data.total_score]
 	return "[center][color=orange]Cleared %d/%d[/color][p][center]Best Score: %d" % [run_data.current_level, run_data.max_level, run_data.total_score]

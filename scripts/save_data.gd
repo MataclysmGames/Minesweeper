@@ -9,13 +9,19 @@ func _ready():
 	reload()
 
 func reload():
+	var start = Time.get_ticks_usec()
 	save_resource = ResourceLoader.load(save_resource_name, "", ResourceLoader.CACHE_MODE_IGNORE) as SaveDataResource
+	var duration : int = Time.get_ticks_usec() - start
+	print("Load file in %d us" % [duration])
 	if not save_resource:
 		save_resource = SaveDataResource.new()
 		save_to_disk()
 
 func save_to_disk():
+	var start = Time.get_ticks_usec()
 	ResourceSaver.save(save_resource, save_resource_name)
+	var duration : int = Time.get_ticks_usec() - start
+	print("Save file in %d us" % [duration])
 
 func purge_save_data():
 	save_resource = SaveDataResource.new()

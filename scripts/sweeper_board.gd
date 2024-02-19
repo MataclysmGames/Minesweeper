@@ -7,7 +7,8 @@ extends Control
 @export var num_mines : int = 8
 @export var config_button : PackedScene
 
-@onready var grid_container : GridContainer = $GridContainer
+@onready var margin_container : MarginContainer = $MarginContainer
+@onready var grid_container : GridContainer = $MarginContainer/GridContainer
 
 signal board_cleared()
 signal board_failed()
@@ -52,24 +53,28 @@ var discover_tween : Tween
 func _process(_delta):
 	if undiscovered_cell_count == 0 and not reject_input:
 		win()
+	margin_container.pivot_offset = margin_container.size / 2.0
 
 func _ready():
-	initialize_with_run_data(RunData.create_normal())
+	var run : RunData = RunData.create_normal()
+	run.current_level = 15
+	initialize_with_run_data(run)
 
 func initialize_with_run_data(run_data : RunData):
 	self.run_data = run_data
 	num_columns = run_data.get_columns()
 	num_rows = run_data.get_rows()
 	num_mines = run_data.get_mines()
-	var x_scale : float = 20.0 / num_columns
-	var y_scale : float = 10.0 / num_rows
+	var x_scale : float = 18.0 / num_columns
+	var y_scale : float = 9.0 / num_rows
 	var xy_scale : float = min(x_scale, y_scale)
-	grid_container.scale = Vector2(xy_scale, xy_scale)
+	margin_container.scale = Vector2(xy_scale, xy_scale)
 	undiscovered_cell_count = (num_columns * num_rows) - num_mines
 	grid_container.columns = num_columns
 	grid_container.modulate = Color(1, 1, 1, 1)
 	for child in grid_container.get_children():
 		grid_container.remove_child(child)
+		child.queue_free()
 	adjacent_cell_offsets = [
 		[-1, -1], [0, -1], [1, -1],
 		[-1, 0],           [1, 0],
@@ -82,12 +87,21 @@ func _input(event : InputEvent):
 	if event is InputEventMouseButton:
 		var mouse_event = event as InputEventMouseButton
 		last_mouse_action = "left" if mouse_event.button_index == MOUSE_BUTTON_LEFT else "right"
+	if event.is_action_pressed("restart"):
+		initialize_with_run_data(run_data)
+		
+func show_grid():
+	grid_container.show()
+	
+func hide_grid():
+	grid_container.hide()
 
 func win():
 	reject_input = true
 	board_cleared.emit()
 
 func hit_mine():
+	run_data.mines_hit += 1
 	run_data.num_lives -= 1
 	if run_data.num_lives <= 0:
 		reject_input = true
@@ -110,7 +124,6 @@ func generate_grid_data():
 		grid_data[i] = CellData.new(button, i)
 		
 	# Assign Mines
-	grid_data.shuffle()
 	grid_data.shuffle()
 	for i in num_mines:
 		grid_data[i].value = -1
@@ -135,8 +148,7 @@ func on_button_pressed(index : int):
 				button.texture_normal = mine_texture
 				hit_mine()
 			else:
-				discover_tween = create_tween()
-				discover_bfs(cell_data)
+				discover_bfs_grouped(cell_data)
 				
 	elif last_mouse_action == "right" and not run_data.commando_enabled:
 		if not cell_data.flagged:
@@ -148,28 +160,44 @@ func on_button_pressed(index : int):
 			button.texture_hover = hover_texture
 			cell_data.flagged = false
 
-func discover_bfs(cell_data : CellData):
-	var found_cells : Array[CellData] = []
-	found_cells.append(cell_data)
-	var index = 0
-	while index < len(found_cells):
-		var curr_cell = found_cells[index]
-		curr_cell.activated = true
-		if curr_cell.value == 0:
-			var adjacent_cells = get_adjacent_cells(curr_cell.index)
-			for next_index in adjacent_cells:
-				var next_cell = grid_data[next_index]
-				if not next_cell.activated:
-					next_cell.activated = true
-					found_cells.append(next_cell)
-		index += 1
-		
-	for cell in found_cells:
-		cell.button.set_deferred("disabled", true)
-		cell.button.focus_mode = Control.FOCUS_NONE
-		discover_tween.tween_callback(cell.button.set_texture_normal.bind(get_cell_texture(cell.value)))
-		discover_tween.tween_callback(decrement_undiscovered_cells)
-		discover_tween.tween_interval(0.0025)
+func discover_bfs_grouped(cell_data : CellData):
+	# Change the selected cell as a special case
+	# The remaining cells that are found will update their textures in a tween
+	cell_data.activated = true
+	cell_data.button.set_deferred("disabled", true)
+	cell_data.button.focus_mode = Control.FOCUS_NONE
+	cell_data.button.texture_normal = get_cell_texture(cell_data.value)
+	decrement_undiscovered_cells()
+	
+	discover_tween = create_tween()
+	discover_tween.set_parallel(true)
+	
+	var curr_found_cells : Array[CellData] = [cell_data]
+	var next_found_cells : Array[CellData] = []
+	
+	var index : int = 0
+	var found_new_cell : bool = true
+	
+	while found_new_cell:
+		index = 0
+		found_new_cell = false
+		next_found_cells = []
+		for cell in curr_found_cells:
+			if cell.value == 0:
+				var adjacent_cells : Array[int] = get_adjacent_cells(cell.index)
+				for next_index in adjacent_cells:
+					var next_cell : CellData = grid_data[next_index]
+					if not next_cell.activated:
+						next_cell.activated = true
+						next_cell.button.set_deferred("disabled", true)
+						next_cell.button.focus_mode = Control.FOCUS_NONE
+						next_found_cells.append(next_cell)
+						found_new_cell = true
+		for cell in next_found_cells:
+			discover_tween.tween_callback(decrement_undiscovered_cells)
+			discover_tween.tween_callback(cell.button.set_texture_normal.bind(get_cell_texture(cell.value)))
+		discover_tween.chain().tween_interval(0.025)
+		curr_found_cells = next_found_cells
 
 func get_cell_texture(value : int) -> Resource:
 	if run_data.just_color_enabled:

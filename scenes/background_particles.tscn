@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://20f4c1i21gu4"]
+
+[sub_resource type="Gradient" id="Gradient_8ur3u"]
+offsets = PackedFloat32Array(0, 0.532143, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[node name="BackgroundParticles" type="CPUParticles2D"]
+z_index = -2
+position = Vector2(320, 128)
+emitting = false
+amount = 64
+lifetime = 6.0
+preprocess = 6.0
+emission_shape = 1
+emission_sphere_radius = 128.0
+direction = Vector2(0, 1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 75.0
+initial_velocity_max = 150.0
+angular_velocity_min = -100.0
+angular_velocity_max = 100.0
+orbit_velocity_min = -0.25
+orbit_velocity_max = 0.25
+linear_accel_min = 1.0
+linear_accel_max = 2.0
+radial_accel_min = 1.0
+radial_accel_max = 2.0
+tangential_accel_min = 1.0
+tangential_accel_max = 2.0
+damping_min = 5.0
+damping_max = 10.0
+scale_amount_min = 4.0
+scale_amount_max = 32.0
+color = Color(0.188235, 0.317647, 0.509804, 1)
+color_ramp = SubResource("Gradient_8ur3u")
+hue_variation_min = -0.1
+hue_variation_max = 0.1

@@ -1,32 +1,20 @@
 class_name RunData
 extends Resource
 
+# Information about the run that gets saved
 @export var time_started : int
+@export var time_ended : int
 @export var current_level : int = 0
 @export var max_level : int = 30
 @export var total_score : int = 0
 @export var difficulty : String
+@export var mines_hit : int = 0
 
-# Configuration
+# Attributes
 var num_lives : int = 3
 var score_multiplier : float = 1.0
-
-var base_time : int = 60
-var progress_time : float = 5
 var extra_time : int = 0
-
-var base_mines : int = 2
-var progress_mines : float = 2.5
 var extra_mines : int = 0
-var max_mines : int = 50
-
-var base_rows : int = 5
-var progress_rows : float = 0.6
-var max_rows : int = 15
-
-var base_columns : int = 10
-var progress_columns : float = 1.2
-var max_columns : int = 30
 
 var commando_enabled : bool = false
 var wrap_around_enabled : bool = false
@@ -34,10 +22,31 @@ var just_color_enabled : bool = false
 
 var modifiers : Array[Modifier]
 
+# Configuration
+var base_time : int = 60
+var progress_time : float = 5
+
+var base_mines : int = 8
+var progress_mines : float = 2.5
+var max_mines : int = 50
+
+var base_rows : int = 8
+var progress_rows : float = 0.6
+var max_rows : int = 30
+
+var base_columns : int = 12
+var progress_columns : float = 1.2
+var max_columns : int = 60
+
 func _init():
 	var unix_time: float = Time.get_unix_time_from_system()
 	var unix_time_ms: int = unix_time * 1000.0
 	time_started = unix_time_ms
+
+func set_end_time():
+	var unix_time: float = Time.get_unix_time_from_system()
+	var unix_time_ms: int = unix_time * 1000.0
+	time_ended = unix_time_ms
 
 func get_rows() -> int:
 	var rows : int = base_rows + current_level * progress_rows
@@ -92,6 +101,7 @@ static func create_easy() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Easy"
 	run_data.num_lives = 5
+	run_data.base_mines = 4
 	run_data.progress_mines = 2.0
 	run_data.base_time = 90
 	run_data.progress_time = 0
@@ -104,6 +114,7 @@ static func create_normal() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Normal"
 	run_data.num_lives = 5
+	run_data.base_mines = 6
 	run_data.progress_mines = 2.2
 	run_data.base_time = 60
 	run_data.progress_time = 0
@@ -116,6 +127,7 @@ static func create_hard() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Hard"
 	run_data.num_lives = 4
+	run_data.base_mines = 8
 	run_data.progress_mines = 2.6
 	run_data.base_time = 45
 	run_data.progress_time = 0
@@ -128,10 +140,11 @@ static func create_nightmare() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Nightmare"
 	run_data.num_lives = 3
+	run_data.base_mines = 8
 	run_data.progress_mines = 2.8
 	run_data.base_time = 30
 	run_data.progress_time = 0
 	run_data.max_level = 30
-	run_data.progress_columns = 1.0
-	run_data.progress_rows = 0.5
+	run_data.progress_columns = 1.3
+	run_data.progress_rows = 0.65
 	return run_data

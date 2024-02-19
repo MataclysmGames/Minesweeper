@@ -6,24 +6,34 @@
 [node name="SweeperBoard" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+offset_right = 640.0
+offset_bottom = 360.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_sb4r0")
-num_columns = 10
-num_rows = 5
-num_mines = 2
+num_columns = 28
+num_rows = 14
+num_mines = 35
 config_button = ExtResource("2_he50q")
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 640.0
-offset_bottom = 335.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(2, 2)
+scale = Vector2(0.642857, 0.642857)
+pivot_offset = Vector2(456, 232)
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
-columns = 10
+columns = 28
