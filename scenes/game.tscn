@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bm4ev752r52na"]
+[gd_scene load_steps=12 format=3 uid="uid://bm4ev752r52na"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_3epsy"]
 [ext_resource type="PackedScene" uid="uid://oloj7yewcqua" path="res://scenes/sweeper_board.tscn" id="2_m0fe3"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bxjjnlel1ef42" path="res://assets/cell-3.png" id="5_36w17"]
 [ext_resource type="StyleBox" uid="uid://foy2mx4aiie4" path="res://resources/ui_sub_button_texture.tres" id="5_debhi"]
 [ext_resource type="PackedScene" uid="uid://20f4c1i21gu4" path="res://scenes/background_particles.tscn" id="9_pxeki"]
+[ext_resource type="PackedScene" uid="uid://b3n5mixxlbaav" path="res://scenes/reward_manager.tscn" id="10_p47ai"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6t6yw"]
 content_margin_left = 8.0
@@ -37,50 +38,55 @@ theme_override_constants/separation = 0
 [node name="InfoContainer" type="HBoxContainer" parent="MainContainer"]
 custom_minimum_size = Vector2(640, 25)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 0
 size_flags_vertical = 2
 alignment = 1
 
-[node name="TimeLabel" type="Label" parent="MainContainer/InfoContainer"]
+[node name="ScoreLabel" type="RichTextLabel" parent="MainContainer/InfoContainer"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 theme = ExtResource("2_xrukd")
-theme_override_font_sizes/font_size = 12
-text = "Time"
-horizontal_alignment = 1
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = " Score[color=gray][font_size=10] 1234"
+fit_content = true
 
-[node name="ScoreLabel" type="Label" parent="MainContainer/InfoContainer"]
+[node name="LevelLabel" type="RichTextLabel" parent="MainContainer/InfoContainer"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 theme = ExtResource("2_xrukd")
-theme_override_font_sizes/font_size = 12
-text = "Score"
-horizontal_alignment = 1
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "Level[color=gray][font_size=10] 1"
+fit_content = true
 
-[node name="LivesLabel" type="Label" parent="MainContainer/InfoContainer"]
+[node name="TimeLabel" type="RichTextLabel" parent="MainContainer/InfoContainer"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+size_flags_horizontal = 2
 theme = ExtResource("2_xrukd")
-theme_override_font_sizes/font_size = 12
-text = "Lives"
-horizontal_alignment = 1
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "02:12.[color=bbb][font_size=10]24"
+fit_content = true
 
-[node name="LevelLabel" type="Label" parent="MainContainer/InfoContainer"]
+[node name="LivesLabel" type="RichTextLabel" parent="MainContainer/InfoContainer"]
 custom_minimum_size = Vector2(128, 0)
 layout_mode = 2
+size_flags_horizontal = 10
 theme = ExtResource("2_xrukd")
-theme_override_font_sizes/font_size = 12
-text = "Level"
-horizontal_alignment = 1
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "[right]Lives[color=gray][font_size=10] 1 "
+fit_content = true
 
 [node name="SweeperBoard" parent="MainContainer" instance=ExtResource("2_m0fe3")]
 custom_minimum_size = Vector2(640, 340)
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 6
-num_columns = 30
-num_rows = 17
-num_mines = 39
 
 [node name="PanelContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -264,7 +270,7 @@ text = "Test 3"
 icon = ExtResource("5_36w17")
 
 [node name="Explanation" type="TextEdit" parent="PanelContainer/LevelUpContainer/Margin/Rewards"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 size_flags_vertical = 2
 focus_mode = 0
@@ -284,6 +290,7 @@ middle_mouse_paste_enabled = false
 wrap_mode = 1
 
 [node name="ReturnToTitleButton" type="Button" parent="PanelContainer/LevelUpContainer"]
+visible = false
 custom_minimum_size = Vector2(200, 40)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -307,4 +314,5 @@ text = "Return to Title"
 
 [node name="BackgroundParticles" parent="." instance=ExtResource("9_pxeki")]
 position = Vector2(320, 180)
-emitting = true
+
+[node name="RewardManager" parent="." instance=ExtResource("10_p47ai")]

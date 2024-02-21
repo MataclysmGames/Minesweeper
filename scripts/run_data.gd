@@ -20,22 +20,25 @@ var commando_enabled : bool = false
 var wrap_around_enabled : bool = false
 var just_color_enabled : bool = false
 var first_one_is_free : bool = false
+var auto_select_empty : bool = false
 
 var modifiers : Array[Modifier]
 
 # Configuration
 var base_time : int = 60
-var progress_time : float = 5
+var progress_time : float = 0
 
-var mine_ratio : float = 0.10
+var mine_ratio : float = 0.08
+var mine_ratio_progress : float = 0.01
+var max_mine_ratio : float = 0.10
 
 var base_rows : int = 8
-var progress_rows : float = 0.6
-var max_rows : int = 30
+var progress_rows : float = 0.5
+var max_rows : int = 20
 
-var base_columns : int = 12
-var progress_columns : float = 1.2
-var max_columns : int = 60
+var base_columns : int = 14
+var progress_columns : float = 1.0
+var max_columns : int = 40
 
 func _init():
 	var unix_time: float = Time.get_unix_time_from_system()
@@ -57,7 +60,9 @@ func get_columns() -> int:
 
 func get_mines() -> int:
 	var size : int = get_rows() * get_columns()
-	var mines : int = ceil((size * mine_ratio) + extra_mines)
+	var current_mine_ratio : float = mine_ratio + (current_level * mine_ratio_progress)
+	var effective_mine_ratio : float = min(max_mine_ratio, current_mine_ratio)
+	var mines : int = ceil((size * effective_mine_ratio) + extra_mines)
 	return mines
 
 func get_allowed_seconds() -> float:
@@ -67,23 +72,8 @@ func get_allowed_seconds() -> float:
 	return seconds
 
 func apply_modifier(modifier : Modifier):
-	if modifier is IncreaseTimeModifier:
-		extra_time += modifier.amount
-	elif modifier is AddLifeModifier:
-		num_lives += modifier.amount
-	elif modifier is IncreaseScoreModifier:
-		score_multiplier *= 1 + (modifier.percent_increase / 100.0)
-	elif modifier is CommandoModifier and not commando_enabled:
-		extra_mines -= 2
-		commando_enabled = true
-	elif modifier is WrapAroundModifier:
-		wrap_around_enabled = true
-	elif modifier is JustColorModifier:
-		just_color_enabled = true
-	elif modifier is FirstOneIsFreeModifier:
-		first_one_is_free = true
-	else:
-		modifiers.append(modifier)
+	modifier.apply(self)
+	modifiers.append(modifier)
 
 static func create_by_difficulty() -> RunData:
 	match Global.current_difficulty:
@@ -103,46 +93,54 @@ static func create_easy() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Easy"
 	run_data.num_lives = 5
-	run_data.mine_ratio = 0.07
+	run_data.mine_ratio = 0.05
+	run_data.mine_ratio_progress = 0.005
+	run_data.max_mine_ratio = 0.08
 	run_data.base_time = 120
 	run_data.progress_time = 0
 	run_data.max_level = 10
-	run_data.progress_columns = 1.4
-	run_data.progress_rows = 0.7
+	run_data.progress_columns = 1.0
+	run_data.progress_rows = 0.5
 	return run_data
 
 static func create_normal() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Normal"
 	run_data.num_lives = 5
-	run_data.mine_ratio = 0.08
+	run_data.mine_ratio = 0.06
+	run_data.mine_ratio_progress = 0.005
+	run_data.max_mine_ratio = 0.10
 	run_data.base_time = 90
 	run_data.progress_time = 0
 	run_data.max_level = 15
-	run_data.progress_columns = 1.4
-	run_data.progress_rows = 0.7
+	run_data.progress_columns = 1.0
+	run_data.progress_rows = 0.5
 	return run_data
 
 static func create_hard() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Hard"
 	run_data.num_lives = 4
-	run_data.mine_ratio = 0.10
+	run_data.mine_ratio = 0.08
+	run_data.mine_ratio_progress = 0.005
+	run_data.max_mine_ratio = 0.12
 	run_data.base_time = 60
 	run_data.progress_time = 0
-	run_data.max_level = 20
-	run_data.progress_columns = 1.4
-	run_data.progress_rows = 0.7
+	run_data.max_level = 15
+	run_data.progress_columns = 0.8
+	run_data.progress_rows = 0.4
 	return run_data
 
 static func create_nightmare() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Nightmare"
 	run_data.num_lives = 3
-	run_data.mine_ratio = 0.12
+	run_data.mine_ratio = 0.08
+	run_data.mine_ratio_progress = 0.005
+	run_data.max_mine_ratio = 0.15
 	run_data.base_time = 60
 	run_data.progress_time = 0
-	run_data.max_level = 30
-	run_data.progress_columns = 1.4
-	run_data.progress_rows = 0.7
+	run_data.max_level = 20
+	run_data.progress_columns = 0.8
+	run_data.progress_rows = 0.4
 	return run_data

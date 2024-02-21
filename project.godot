@@ -26,6 +26,8 @@ Global="*res://scripts/global.gd"
 [debug]
 
 gdscript/warnings/shadowed_variable=0
+gdscript/warnings/shadowed_variable_base_class=0
+gdscript/warnings/shadowed_global_identifier=0
 gdscript/warnings/integer_division=0
 gdscript/warnings/narrowing_conversion=0
 
@@ -33,7 +35,6 @@ gdscript/warnings/narrowing_conversion=0
 
 window/size/viewport_width=640
 window/size/viewport_height=360
-window/size/mode=4
 window/size/window_width_override=1920
 window/size/window_height_override=1080
 window/stretch/mode="canvas_items"

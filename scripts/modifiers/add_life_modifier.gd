@@ -11,3 +11,6 @@ func _init(amount : int = 1):
 	else:
 		title = "+%d Lives" % amount
 		explanation = "Get %d more lives. It's your lucky day!" % amount
+
+func apply(run_data : RunData) -> void:
+	run_data.num_lives += amount

@@ -1,10 +1,10 @@
 class_name Game
 extends Control
 
-@onready var time_left_label : Label = $MainContainer/InfoContainer/TimeLabel
-@onready var score_label : Label = $MainContainer/InfoContainer/ScoreLabel
-@onready var lives_label : Label = $MainContainer/InfoContainer/LivesLabel
-@onready var level_label : Label = $MainContainer/InfoContainer/LevelLabel
+@onready var time_left_label : RichTextLabel = $MainContainer/InfoContainer/TimeLabel
+@onready var score_label : RichTextLabel = $MainContainer/InfoContainer/ScoreLabel
+@onready var lives_label : RichTextLabel = $MainContainer/InfoContainer/LivesLabel
+@onready var level_label : RichTextLabel = $MainContainer/InfoContainer/LevelLabel
 
 @onready var sweeper_board : SweeperBoard = $MainContainer/SweeperBoard
 @onready var panel_container : MarginContainer = $PanelContainer
@@ -21,6 +21,8 @@ extends Control
 @onready var reward_explanation_text : TextEdit = $PanelContainer/LevelUpContainer/Margin/Rewards/Explanation
 
 @onready var return_to_title_button : Button = $PanelContainer/LevelUpContainer/ReturnToTitleButton
+@onready var reward_manager : RewardManager = $RewardManager
+
 
 var timer : Timer
 var run_data : RunData
@@ -51,22 +53,22 @@ func _process(_delta):
 	if timer_text:
 		time_left_label.text = timer_text
 	#level_score_label.text = "Level Score (x%3.2f)" % [run_data.score_multiplier]
-	level_score_label.text = "Level Score"
-	score_label.text = "Score: %d" % [run_data.total_score]
-	lives_label.text = "Lives: %d" % [run_data.num_lives]
-	level_label.text = "Level: %d" % [run_data.current_level]
+	#level_score_label.text = "Level Score"
+	score_label.text = " Score[color=gray][font_size=10] %d" % [run_data.total_score]
+	lives_label.text = "[right]Lives[color=#ddd][font_size=10] %d " % [run_data.num_lives]
+	level_label.text = "Level[color=#ddd][font_size=10] %d" % [run_data.current_level]
 	total_points_label.text = str(run_data.total_score)
 	level_points_label.text = str(level_score)
 	
-	if reward_button_1.is_hovered():
+	if reward_button_1.is_hovered() or reward_button_1.button_pressed:
 		explanation_tween.kill()
 		reward_explanation_text.text = rewards[0].explanation
 		reward_explanation_text.modulate = Color(1, 1, 1, 1)
-	elif reward_button_2.is_hovered():
+	elif reward_button_2.is_hovered()  or reward_button_2.button_pressed:
 		explanation_tween.kill()
 		reward_explanation_text.text = rewards[1].explanation
 		reward_explanation_text.modulate = Color(1, 1, 1, 1)
-	elif reward_button_3.is_hovered():
+	elif reward_button_3.is_hovered()  or reward_button_3.button_pressed:
 		explanation_tween.kill()
 		reward_explanation_text.text = rewards[2].explanation
 		reward_explanation_text.modulate = Color(1, 1, 1, 1)
@@ -74,7 +76,7 @@ func _process(_delta):
 		if reward_explanation_text.text != "":
 			reward_explanation_text.text = ""
 			explanation_tween = create_tween()
-			explanation_tween.tween_property(reward_explanation_text, "modulate", Color(0, 0, 0, 0), 0.5).set_trans(Tween.TRANS_EXPO)
+			explanation_tween.tween_property(reward_explanation_text, "modulate", Color(1, 1, 1, 0), 0.5).set_trans(Tween.TRANS_EXPO)
 
 func start():
 	run_data.current_level += 1
@@ -122,7 +124,7 @@ func progress_level():
 
 func set_rewards():
 	rewards_container.modulate = Color(1, 1, 1, 0)
-	rewards = get_rewards()
+	rewards = reward_manager.get_rewards(run_data)
 	reward_button_1.text = rewards[0].title
 	reward_button_2.text = rewards[1].title
 	reward_button_3.text = rewards[2].title
@@ -138,24 +140,6 @@ func enable_rewards():
 	
 func update_save_data():
 	SaveData.save_run_if_better(run_data, Global.current_difficulty)
-
-func get_rewards() -> Array[Modifier]:
-	var possible_rewards : Array[Modifier]
-	if not run_data.commando_enabled:
-		possible_rewards.append(CommandoModifier.new())
-	if not run_data.wrap_around_enabled:
-		possible_rewards.append(WrapAroundModifier.new())
-	if not run_data.just_color_enabled:
-		possible_rewards.append(JustColorModifier.new())
-	if not run_data.first_one_is_free:
-		possible_rewards.append(FirstOneIsFreeModifier.new())
-
-	possible_rewards.append(IncreaseTimeModifier.new(5, 10))
-	possible_rewards.append(AddLifeModifier.new())
-	possible_rewards.append(IncreaseScoreModifier.new())
-	
-	possible_rewards.shuffle()
-	return possible_rewards.slice(0, 3)
 
 func accept_reward(index : int):
 	var reward := rewards[index]
@@ -176,9 +160,8 @@ func lose_life():
 		start()
 
 func game_over():
-	# Didn't finish the level
 	run_data.set_end_time()
-	run_data.current_level -= 1
+	run_data.current_level -= 1 # Didn't finish the level
 	SaveData.record_run(run_data)
 	print("Run ended at level %d with score : %d" % [run_data.current_level, run_data.total_score])
 	get_tree().change_scene_to_file("res://scenes/title.tscn")
@@ -192,4 +175,12 @@ func get_time_left_text() -> String:
 		return ""
 	var seconds_remaining : float = timer.time_left
 	var minutes_remaining : int = seconds_remaining / 60
-	return "%02d:%05.2f" % [minutes_remaining, seconds_remaining - (minutes_remaining * 60)]
+	
+	var seconds_int : int = seconds_remaining - (minutes_remaining * 60)
+	var ms_int : int = (seconds_remaining - (minutes_remaining * 60) - seconds_int) * 100
+	if seconds_remaining < 10:
+		return "[color=red]%02d:%02d[color=800].[font_size=10]%02d" % [minutes_remaining, seconds_int, ms_int]
+	elif seconds_remaining < 30:
+		return "[color=fa0]%02d:%02d[color=840].[font_size=10]%02d" % [minutes_remaining, seconds_int, ms_int]
+	else:
+		return "%02d:%02d[color=bbb].[font_size=10]%02d" % [minutes_remaining, seconds_int, ms_int]

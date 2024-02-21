@@ -4,3 +4,6 @@ extends Modifier
 func _init():
 	title = "First One\nIs Free"
 	explanation = "Guarantee the first cell clicked isn't a bomb."
+
+func apply(run_data : RunData) -> void:
+	run_data.first_one_is_free = true

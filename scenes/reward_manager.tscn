@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b3n5mixxlbaav"]
+
+[ext_resource type="Script" path="res://scripts/reward_manager.gd" id="1_xd7ny"]
+
+[node name="RewardManager" type="Node2D"]
+script = ExtResource("1_xd7ny")

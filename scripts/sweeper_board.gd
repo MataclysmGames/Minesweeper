@@ -2,6 +2,11 @@
 class_name SweeperBoard
 extends Control
 
+@export var edit_current_level : int = 0:
+	set(v):
+		edit_current_level = v
+		_ready()
+		
 @export var num_columns : int = 8
 @export var num_rows : int = 8
 @export var num_mines : int = 8
@@ -57,8 +62,8 @@ func _process(_delta):
 	margin_container.pivot_offset = margin_container.size / 2.0
 
 func _ready():
-	var run : RunData = RunData.create_normal()
-	run.current_level = 15
+	var run : RunData = RunData.create_nightmare()
+	run.current_level = edit_current_level
 	initialize_with_run_data(run)
 
 func initialize_with_run_data(run_data : RunData):
@@ -66,10 +71,9 @@ func initialize_with_run_data(run_data : RunData):
 	num_columns = run_data.get_columns()
 	num_rows = run_data.get_rows()
 	num_mines = run_data.get_mines()
-	print("%dx%d with %d mines" % [num_rows, num_columns, num_mines])
-	print("Mine ratio: %f" % ((100.0 * num_mines) / (num_columns * num_rows)))
-	var x_scale : float = 18.0 / num_columns
-	var y_scale : float = 9.0 / num_rows
+	print("[%s:%d] Size=%dx%d Mines=%d Ratio=%5.3f" % [run_data.difficulty, run_data.current_level, num_rows, num_columns, num_mines, ((100.0 * num_mines) / (num_columns * num_rows))])
+	var x_scale : float = 20.0 / num_columns
+	var y_scale : float = 9.5 / num_rows
 	var xy_scale : float = min(x_scale, y_scale)
 	margin_container.scale = Vector2(xy_scale, xy_scale)
 	undiscovered_cell_count = (num_columns * num_rows) - num_mines
@@ -86,6 +90,7 @@ func initialize_with_run_data(run_data : RunData):
 	generate_grid_data()
 	reject_input = false
 	cells_selected = 0
+	expose_empty_cell()
 
 func _input(event : InputEvent):
 	if event is InputEventMouseButton:
@@ -138,7 +143,20 @@ func generate_grid_data():
 		if grid_data[i].value != -1:
 			grid_data[i].value = calculate_value_for_cell(i)
 
-func on_button_pressed(index : int):
+func expose_empty_cell():
+	if run_data.auto_select_empty:
+		var start : int = randi_range(0, grid_data.size() - 1)
+		var index : int = 0
+		var size : int = grid_data.size()
+		while index < size:
+			var curr_index = (start + index) % size
+			if grid_data[curr_index].value == 0:
+				on_button_pressed(curr_index, false)
+				return
+			index += 1
+		print("Couldn't use auto_select_empty because no empty cells.")
+
+func on_button_pressed(index : int, is_user_press : bool = true):
 	if reject_input:
 		return
 
@@ -171,7 +189,8 @@ func on_button_pressed(index : int):
 			button.texture_normal = default_texture
 			button.texture_hover = hover_texture
 			cell_data.flagged = false
-	cells_selected += 1
+	if is_user_press:
+		cells_selected += 1
 
 func discover_bfs_grouped(cell_data : CellData):
 	# Change the selected cell as a special case
