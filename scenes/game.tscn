@@ -36,10 +36,10 @@ grow_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="InfoContainer" type="HBoxContainer" parent="MainContainer"]
-custom_minimum_size = Vector2(640, 25)
+custom_minimum_size = Vector2(640, 20)
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 10
 alignment = 1
 
 [node name="ScoreLabel" type="RichTextLabel" parent="MainContainer/InfoContainer"]
@@ -83,7 +83,7 @@ text = "[right]Lives[color=gray][font_size=10] 1 "
 fit_content = true
 
 [node name="SweeperBoard" parent="MainContainer" instance=ExtResource("2_m0fe3")]
-custom_minimum_size = Vector2(640, 340)
+custom_minimum_size = Vector2(640, 336)
 layout_mode = 2
 size_flags_horizontal = 1
 size_flags_vertical = 6

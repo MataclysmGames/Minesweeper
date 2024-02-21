@@ -14,7 +14,6 @@ func load_history():
 	var run_history : Array[RunData] = SaveData.get_run_history()
 	run_history.sort_custom(func(a : RunData, b : RunData): return b.time_started - a.time_started)
 	for run_data in run_history:
-		print("run data")
 		var date_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
 		var date_str = Time.get_datetime_string_from_unix_time(run_data.time_started / 1000, true)
 		date_label.text = "[center]%s" % [date_str]
@@ -56,6 +55,3 @@ func difficulty_label(run_data : RunData) -> String:
 func delete_all_history():
 	SaveData.purge_save_data()
 	get_tree().reload_current_scene()
-
-func _process(delta):
-	pass

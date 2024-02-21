@@ -73,7 +73,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("1_uy0pa")
 theme_override_constants/outline_size = 1
-text = "Date"
+text = "Date (UTC)"
 horizontal_alignment = 1
 vertical_alignment = 1
 
