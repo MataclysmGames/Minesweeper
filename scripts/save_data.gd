@@ -4,24 +4,17 @@ const save_resource_name : String = "user://save.tres"
 
 var save_resource : SaveDataResource
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	reload()
 
 func reload():
-	#var start = Time.get_ticks_usec()
 	save_resource = ResourceLoader.load(save_resource_name, "", ResourceLoader.CACHE_MODE_IGNORE) as SaveDataResource
-	#var duration : int = Time.get_ticks_usec() - start
-	#print("Load file in %d us" % [duration])
 	if not save_resource:
 		save_resource = SaveDataResource.new()
 		save_to_disk()
 
 func save_to_disk():
-	#var start = Time.get_ticks_usec()
 	ResourceSaver.save(save_resource, save_resource_name)
-	#var duration : int = Time.get_ticks_usec() - start
-	#print("Save file in %d us" % [duration])
 
 func purge_save_data():
 	save_resource = SaveDataResource.new()
@@ -74,3 +67,6 @@ func run_is_better(saved_run : RunData, current_run : RunData) -> bool:
 func record_run(run_data : RunData):
 	save_resource.run_history.append(run_data)
 	save_to_disk()
+
+func get_run_history() -> Array[RunData]:
+	return save_resource.run_history

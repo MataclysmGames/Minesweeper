@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://juskhdgnfqr"]
+
+[ext_resource type="Theme" uid="uid://dtli4pnsek1s0" path="res://resources/default_font.tres" id="1_l4507"]
+
+[node name="HistoryBaseLabel" type="RichTextLabel"]
+size_flags_horizontal = 3
+theme = ExtResource("1_l4507")
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "2024-02-20 10:05:32 PST"
+fit_content = true

@@ -4,7 +4,7 @@ extends Resource
 # Information about the run that gets saved
 @export var time_started : int
 @export var time_ended : int
-@export var current_level : int = 0
+@export var current_level : int = 9
 @export var max_level : int = 30
 @export var total_score : int = 0
 @export var difficulty : String
