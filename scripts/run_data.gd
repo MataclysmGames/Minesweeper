@@ -95,7 +95,7 @@ static func create_easy() -> RunData:
 	run_data.num_lives = 5
 	run_data.mine_ratio = 0.05
 	run_data.mine_ratio_progress = 0.005
-	run_data.max_mine_ratio = 0.08
+	run_data.max_mine_ratio = 0.10
 	run_data.base_time = 120
 	run_data.progress_time = 0
 	run_data.max_level = 10
@@ -108,13 +108,13 @@ static func create_normal() -> RunData:
 	run_data.difficulty = "Normal"
 	run_data.num_lives = 5
 	run_data.mine_ratio = 0.06
-	run_data.mine_ratio_progress = 0.005
-	run_data.max_mine_ratio = 0.10
+	run_data.mine_ratio_progress = 0.004
+	run_data.max_mine_ratio = 0.12
 	run_data.base_time = 90
 	run_data.progress_time = 0
 	run_data.max_level = 15
-	run_data.progress_columns = 0.6
-	run_data.progress_rows = 0.3
+	run_data.progress_columns = 0.5
+	run_data.progress_rows = 0.25
 	return run_data
 
 static func create_hard() -> RunData:
@@ -122,25 +122,25 @@ static func create_hard() -> RunData:
 	run_data.difficulty = "Hard"
 	run_data.num_lives = 4
 	run_data.mine_ratio = 0.08
-	run_data.mine_ratio_progress = 0.005
-	run_data.max_mine_ratio = 0.12
+	run_data.mine_ratio_progress = 0.003
+	run_data.max_mine_ratio = 0.14
 	run_data.base_time = 60
 	run_data.progress_time = 0
-	run_data.max_level = 15
-	run_data.progress_columns = 0.7
-	run_data.progress_rows = 0.35
+	run_data.max_level = 20
+	run_data.progress_columns = 0.5
+	run_data.progress_rows = 0.25
 	return run_data
 
 static func create_nightmare() -> RunData:
 	var run_data := RunData.new()
 	run_data.difficulty = "Nightmare"
 	run_data.num_lives = 3
-	run_data.mine_ratio = 0.08
-	run_data.mine_ratio_progress = 0.005
-	run_data.max_mine_ratio = 0.15
+	run_data.mine_ratio = 0.09
+	run_data.mine_ratio_progress = 0.0035
+	run_data.max_mine_ratio = 0.16
 	run_data.base_time = 60
 	run_data.progress_time = 0
-	run_data.max_level = 20
-	run_data.progress_columns = 0.8
-	run_data.progress_rows = 0.4
+	run_data.max_level = 25
+	run_data.progress_columns = 0.6
+	run_data.progress_rows = 0.3
 	return run_data
