@@ -16,6 +16,16 @@ theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 script = ExtResource("1_ywccq")
 
+[node name="ConfirmationContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ConfirmationContainer"]
+layout_mode = 2
+theme = ExtResource("1_uy0pa")
+text = "Are you sure you want to delete all save data?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
 

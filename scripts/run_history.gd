@@ -6,8 +6,11 @@ extends MarginContainer
 @onready var back_button : Button = $VBoxContainer/HistoryButtonsContainer/BackButton
 @onready var clear_button : Button = $VBoxContainer/HistoryButtonsContainer/ClearButton
 
+@onready var confirmation_label : Label = $ConfirmationContainer/Label
+
 func _ready():
-	clear_button.pressed.connect(delete_all_history)
+	confirmation_label.visible = false
+	clear_button.pressed.connect(clear_button_pressed)
 	load_history()
 
 func load_history():
@@ -60,6 +63,13 @@ func difficulty_label(run_data : RunData) -> String:
 			return "[center][color=purple]%s" % [run_data.difficulty]
 		_:
 			return ""
+
+func clear_button_pressed():
+	if confirmation_label.visible:
+		delete_all_history()
+	else:
+		confirmation_label.visible = true
+		clear_button.text = "Yes"
 
 func delete_all_history():
 	SaveData.purge_save_data()

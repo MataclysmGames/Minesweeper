@@ -75,6 +75,8 @@ func show_difficulty_select():
 	tween.parallel().tween_property(title_buttons_container, "position", title_buttons_container.position + Vector2(-1000, 0), tween_duration).set_trans(Tween.TRANS_EXPO)
 	
 func show_history():
+	run_history.confirmation_label.visible = false
+	run_history.clear_button.text = "Clear"
 	var tween = create_tween()
 	tween.tween_property(difficulty_select_container, "position", difficulty_select_container.position + Vector2(0, 1000), tween_duration).set_trans(Tween.TRANS_EXPO)
 	tween.parallel().tween_property(difficulty_select_buttons_container, "position", difficulty_select_buttons_container.position + Vector2(0, 1000), tween_duration).set_trans(Tween.TRANS_EXPO)
