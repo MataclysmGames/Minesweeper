@@ -57,12 +57,13 @@ var discover_tween : Tween
 var cells_selected : int = 0
 
 func _process(_delta):
-	if undiscovered_cell_count == 0 and not reject_input:
+	if undiscovered_cell_count <= 0 and not reject_input:
 		win()
 	margin_container.pivot_offset = margin_container.size / 2.0
 
 func _ready():
-	var run : RunData = RunData.create_nightmare()
+	return
+	var run : RunData = RunData.create_easy()
 	run.current_level = edit_current_level
 	initialize_with_run_data(run)
 
@@ -170,6 +171,9 @@ func on_button_pressed(index : int, is_user_press : bool = true):
 			for i in range(num_columns * num_rows):
 				if grid_data[i].value != -1:
 					grid_data[i].value = calculate_value_for_cell(i)
+			for cell in grid_data:
+				if cell.activated:
+					cell.button.texture_normal = get_cell_texture(cell.value)
 			
 		if not cell_data.activated and not cell_data.flagged:
 			if cell_data.value == -1: # Bomb

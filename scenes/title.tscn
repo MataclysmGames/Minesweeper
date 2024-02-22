@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmwwwolg6lbrs"]
+[gd_scene load_steps=5 format=3 uid="uid://dmwwwolg6lbrs"]
 
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_oojlx"]
 [ext_resource type="Theme" uid="uid://dtli4pnsek1s0" path="res://resources/default_font.tres" id="2_8wane"]
 [ext_resource type="StyleBox" uid="uid://c4o8pc3rf1rt4" path="res://resources/ui_button_texture.tres" id="3_h15qp"]
-[ext_resource type="PackedScene" uid="uid://20f4c1i21gu4" path="res://scenes/background_particles.tscn" id="4_6ihcp"]
 [ext_resource type="PackedScene" uid="uid://be3yx1nsysbiu" path="res://scenes/run_history.tscn" id="5_4lr8y"]
 
 [node name="Title" type="Control"]
@@ -47,6 +46,49 @@ theme_override_constants/outline_size = 3
 text = "By Matthew Erickson"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="TitleButtonsContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -80.0
+offset_top = -80.0
+offset_right = 80.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 32
+
+[node name="ExitButton" type="Button" parent="TitleButtonsContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
+text = "Exit"
+
+[node name="StartButton" type="Button" parent="TitleButtonsContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_8wane")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("3_h15qp")
+theme_override_styles/hover = ExtResource("3_h15qp")
+theme_override_styles/pressed = ExtResource("3_h15qp")
+theme_override_styles/disabled = ExtResource("3_h15qp")
+theme_override_styles/focus = ExtResource("3_h15qp")
+text = "Start"
 
 [node name="DifficultySelectContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -175,49 +217,6 @@ text = "[center][color=green]Cleared![/color][p]Best Score: 1234567"
 fit_content = true
 autowrap_mode = 0
 
-[node name="TitleButtonsContainer" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -80.0
-offset_top = -80.0
-offset_right = 80.0
-offset_bottom = -40.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 32
-
-[node name="ExitButton" type="Button" parent="TitleButtonsContainer"]
-custom_minimum_size = Vector2(64, 0)
-layout_mode = 2
-focus_mode = 0
-theme = ExtResource("2_8wane")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("3_h15qp")
-theme_override_styles/hover = ExtResource("3_h15qp")
-theme_override_styles/pressed = ExtResource("3_h15qp")
-theme_override_styles/disabled = ExtResource("3_h15qp")
-theme_override_styles/focus = ExtResource("3_h15qp")
-text = "Exit"
-
-[node name="StartButton" type="Button" parent="TitleButtonsContainer"]
-custom_minimum_size = Vector2(64, 0)
-layout_mode = 2
-focus_mode = 0
-theme = ExtResource("2_8wane")
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = ExtResource("3_h15qp")
-theme_override_styles/hover = ExtResource("3_h15qp")
-theme_override_styles/pressed = ExtResource("3_h15qp")
-theme_override_styles/disabled = ExtResource("3_h15qp")
-theme_override_styles/focus = ExtResource("3_h15qp")
-text = "Start"
-
 [node name="DifficultySelectButtonsContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 10
@@ -258,9 +257,6 @@ theme_override_styles/pressed = ExtResource("3_h15qp")
 theme_override_styles/disabled = ExtResource("3_h15qp")
 theme_override_styles/focus = ExtResource("3_h15qp")
 text = "History"
-
-[node name="BackgroundParticles" parent="." instance=ExtResource("4_6ihcp")]
-position = Vector2(320, 180)
 
 [node name="RunHistory" parent="." instance=ExtResource("5_4lr8y")]
 layout_mode = 1

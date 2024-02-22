@@ -19,8 +19,8 @@ var extra_mines : int = 0
 var commando_enabled : bool = false
 var wrap_around_enabled : bool = false
 var just_color_enabled : bool = false
-var first_one_is_free : bool = false
-var auto_select_empty : bool = false
+var first_one_is_free : bool = true
+var auto_select_empty : bool = true
 
 var modifiers : Array[Modifier]
 
@@ -99,8 +99,8 @@ static func create_easy() -> RunData:
 	run_data.base_time = 120
 	run_data.progress_time = 0
 	run_data.max_level = 10
-	run_data.progress_columns = 0.6
-	run_data.progress_rows = 0.3
+	run_data.progress_columns = 0.5
+	run_data.progress_rows = 0.25
 	return run_data
 
 static func create_normal() -> RunData:
@@ -113,8 +113,8 @@ static func create_normal() -> RunData:
 	run_data.base_time = 90
 	run_data.progress_time = 0
 	run_data.max_level = 15
-	run_data.progress_columns = 0.7
-	run_data.progress_rows = 0.35
+	run_data.progress_columns = 0.6
+	run_data.progress_rows = 0.3
 	return run_data
 
 static func create_hard() -> RunData:
@@ -127,8 +127,8 @@ static func create_hard() -> RunData:
 	run_data.base_time = 60
 	run_data.progress_time = 0
 	run_data.max_level = 15
-	run_data.progress_columns = 0.8
-	run_data.progress_rows = 0.4
+	run_data.progress_columns = 0.7
+	run_data.progress_rows = 0.35
 	return run_data
 
 static func create_nightmare() -> RunData:
@@ -141,6 +141,6 @@ static func create_nightmare() -> RunData:
 	run_data.base_time = 60
 	run_data.progress_time = 0
 	run_data.max_level = 20
-	run_data.progress_columns = 0.9
-	run_data.progress_rows = 0.45
+	run_data.progress_columns = 0.8
+	run_data.progress_rows = 0.4
 	return run_data

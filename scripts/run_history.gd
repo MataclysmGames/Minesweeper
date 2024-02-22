@@ -12,31 +12,40 @@ func _ready():
 
 func load_history():
 	var run_history : Array[RunData] = SaveData.get_run_history()
-	run_history.sort_custom(func(a : RunData, b : RunData): return b.time_started - a.time_started)
+	var entries : Array[Entry]
 	for run_data in run_history:
-		var date_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
-		var date_str = Time.get_datetime_string_from_unix_time(run_data.time_started / 1000, true)
-		date_label.text = "[center]%s" % [date_str]
-		grid.add_child(date_label)
-		
-		var difficulty_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
-		difficulty_label.text = difficulty_label(run_data)
-		grid.add_child(difficulty_label)
-		
-		var duration_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
+		var entry : Entry = Entry.new()
+		entry.date_str = "[center]%s" % [Time.get_datetime_string_from_unix_time(run_data.time_started / 1000, true)]
+		entry.difficulty = difficulty_label(run_data)
 		var duration_ms : int = run_data.time_ended - run_data.time_started
 		var minutes : int = duration_ms / 60000
 		var seconds : int = (duration_ms / 1000) % 60
 		var ms : int = duration_ms % 1000
-		duration_label.text = "[center]%02d:%02d.%03d" % [minutes, seconds, ms]
+		entry.duration = "[center]%02d:%02d.%03d" % [minutes, seconds, ms]
+		entry.levels = "[center]%d/%d" % [run_data.current_level, run_data.max_level]
+		entry.score = "[center][color=green]%d" % [run_data.total_score]
+		entries.append(entry)
+		
+	entries.sort_custom(func(a : Entry, b : Entry): return a.date_str > b.date_str)
+	for entry in entries:
+		var date_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
+		date_label.text = entry.date_str
+		grid.add_child(date_label)
+		
+		var difficulty_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
+		difficulty_label.text = entry.difficulty
+		grid.add_child(difficulty_label)
+		
+		var duration_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
+		duration_label.text = entry.duration
 		grid.add_child(duration_label)
 		
 		var levels_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
-		levels_label.text = "[center]%d/%d" % [run_data.current_level, run_data.max_level]
+		levels_label.text = entry.levels
 		grid.add_child(levels_label)
 		
 		var score_label : RichTextLabel = history_base_label.instantiate() as RichTextLabel
-		score_label.text = "[center][color=green]%d" % [run_data.total_score]
+		score_label.text = entry.score
 		grid.add_child(score_label)
 
 func difficulty_label(run_data : RunData) -> String:
@@ -55,3 +64,11 @@ func difficulty_label(run_data : RunData) -> String:
 func delete_all_history():
 	SaveData.purge_save_data()
 	get_tree().reload_current_scene()
+
+class Entry:
+	var date_str : String
+	var difficulty : String
+	var duration : String
+	var levels : String
+	var score : String
+	

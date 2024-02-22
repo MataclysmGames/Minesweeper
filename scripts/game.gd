@@ -23,7 +23,6 @@ extends Control
 @onready var return_to_title_button : Button = $PanelContainer/LevelUpContainer/ReturnToTitleButton
 @onready var reward_manager : RewardManager = $RewardManager
 
-
 var timer : Timer
 var run_data : RunData
 var level_score : int = 0
@@ -39,7 +38,6 @@ func _ready():
 	reward_button_3.pressed.connect(accept_reward.bind(2))
 	return_to_title_button.pressed.connect(on_view_summary)
 	
-	explanation_tween = create_tween()
 	timer = Timer.new()
 	timer.one_shot = true
 	timer.autostart = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bm4ev752r52na"]
+[gd_scene load_steps=11 format=3 uid="uid://bm4ev752r52na"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_3epsy"]
 [ext_resource type="PackedScene" uid="uid://oloj7yewcqua" path="res://scenes/sweeper_board.tscn" id="2_m0fe3"]
@@ -8,7 +8,6 @@
 [ext_resource type="Texture2D" uid="uid://ccboh8pi2sh7e" path="res://assets/window-background.png" id="4_aqnu0"]
 [ext_resource type="Texture2D" uid="uid://bxjjnlel1ef42" path="res://assets/cell-3.png" id="5_36w17"]
 [ext_resource type="StyleBox" uid="uid://foy2mx4aiie4" path="res://resources/ui_sub_button_texture.tres" id="5_debhi"]
-[ext_resource type="PackedScene" uid="uid://20f4c1i21gu4" path="res://scenes/background_particles.tscn" id="9_pxeki"]
 [ext_resource type="PackedScene" uid="uid://b3n5mixxlbaav" path="res://scenes/reward_manager.tscn" id="10_p47ai"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6t6yw"]
@@ -312,8 +311,5 @@ theme_override_styles/pressed = ExtResource("5_debhi")
 theme_override_styles/disabled = ExtResource("5_debhi")
 theme_override_styles/focus = ExtResource("5_debhi")
 text = "Return to Title"
-
-[node name="BackgroundParticles" parent="." instance=ExtResource("9_pxeki")]
-position = Vector2(320, 180)
 
 [node name="RewardManager" parent="." instance=ExtResource("10_p47ai")]

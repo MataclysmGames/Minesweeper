@@ -22,8 +22,6 @@ const tween_duration : float = 0.6
 @onready var hard_label : RichTextLabel = $DifficultySelectContainer/HardContainer/Label
 @onready var nightmare_label : RichTextLabel = $DifficultySelectContainer/NightmareContainer/Label
 
-@onready var background_particles : CPUParticles2D = $BackgroundParticles
-
 @onready var run_history : RunHistory = $RunHistory
 
 func _ready():
@@ -57,8 +55,6 @@ func _ready():
 	normal_label.text = format_run(best_normal_run)
 	hard_label.text = format_run(best_hard_run)
 	nightmare_label.text = format_run(best_nightmare_run)
-	
-	background_particles.emitting = true
 
 func exit_game():
 	SaveData.save_to_disk()

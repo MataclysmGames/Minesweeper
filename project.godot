@@ -22,6 +22,8 @@ GameInit="*res://scripts/game_init.gd"
 BackgroundAudio="*res://scenes/background_audio.tscn"
 SaveData="*res://scripts/save_data.gd"
 Global="*res://scripts/global.gd"
+NoiseBackground="*res://scenes/noise_background.tscn"
+BackgroundParticles="*res://scenes/background_particles.tscn"
 
 [debug]
 

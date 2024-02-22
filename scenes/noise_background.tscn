@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://bq76rhseheqga"]
+
+[ext_resource type="Script" path="res://scripts/background_noise.gd" id="1_me7hm"]
+
+[sub_resource type="Gradient" id="Gradient_7oo8o"]
+colors = PackedColorArray(0.0989925, 0.183897, 0.309907, 1, 0, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w8gxl"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rltjp"]
+width = 800
+height = 800
+seamless = true
+color_ramp = SubResource("Gradient_7oo8o")
+noise = SubResource("FastNoiseLite_w8gxl")
+
+[node name="NoiseBackground" type="Node2D"]
+z_index = -4
+script = ExtResource("1_me7hm")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -80.0
+offset_top = -220.0
+offset_right = 720.0
+offset_bottom = 580.0
+pivot_offset = Vector2(400, 400)
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = SubResource("NoiseTexture2D_rltjp")
