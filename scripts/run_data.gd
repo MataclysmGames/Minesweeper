@@ -19,8 +19,8 @@ var extra_mines : int = 0
 var commando_enabled : bool = false
 var wrap_around_enabled : bool = false
 var just_color_enabled : bool = false
-var first_one_is_free : bool = true
-var auto_select_empty : bool = true
+var first_one_is_free : bool = false
+var auto_select_empty : bool = false
 
 var modifiers : Array[Modifier]
 
