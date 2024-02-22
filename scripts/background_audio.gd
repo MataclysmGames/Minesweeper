@@ -9,7 +9,7 @@ func _ready():
 	pass
 
 func play_main_theme(pitch : float = 1.0):
-	play_audio(main_theme, -20.0, pitch)
+	play_audio(main_theme, -25.0, pitch)
 
 func play_audio(audio : AudioStream, volume : float = 0.0, pitch : float = 1.0, transition_duration : float = 2.0):
 	if not audio:
