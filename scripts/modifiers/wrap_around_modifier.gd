@@ -7,3 +7,6 @@ func _init():
 
 func apply(run_data : RunData) -> void:
 	run_data.wrap_around_enabled = true
+
+func is_available(run_data : RunData) -> bool:
+	return not run_data.wrap_around_enabled

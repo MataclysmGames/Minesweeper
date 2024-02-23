@@ -9,7 +9,7 @@ func _ready():
 	pass
 
 func play_main_theme(pitch : float = 1.0):
-	play_audio(main_theme, -25.0, pitch)
+	play_audio(main_theme, -30.0, pitch)
 
 func play_audio(audio : AudioStream, volume : float = 0.0, pitch : float = 1.0, transition_duration : float = 2.0):
 	if not audio:
@@ -23,7 +23,7 @@ func play_audio(audio : AudioStream, volume : float = 0.0, pitch : float = 1.0, 
 		if audio_stream_player.playing:
 			tween.tween_property(audio_stream_player, "volume_db", -100, transition_duration)
 		tween.tween_callback(func(): audio_stream_player.stream = audio)
-		tween.tween_callback(func(): audio_stream_player.volume_db = -20)
+		tween.tween_callback(func(): audio_stream_player.volume_db = -30)
 		tween.tween_callback(func(): audio_stream_player.pitch_scale = pitch)
 		tween.tween_callback(audio_stream_player.play)
 		tween.tween_property(audio_stream_player, "volume_db", volume, transition_duration)

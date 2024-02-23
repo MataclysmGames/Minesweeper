@@ -21,6 +21,8 @@ var wrap_around_enabled : bool = false
 var just_color_enabled : bool = false
 var first_one_is_free : bool = false
 var auto_select_empty : bool = false
+var blood_sacrifice : bool = false
+var blood_sacrifice_plus : bool = false
 
 var modifiers : Array[Modifier]
 
@@ -63,6 +65,8 @@ func get_mines() -> int:
 	var current_mine_ratio : float = mine_ratio + (current_level * mine_ratio_progress)
 	var effective_mine_ratio : float = min(max_mine_ratio, current_mine_ratio)
 	var mines : int = ceil((size * effective_mine_ratio) + extra_mines)
+	if commando_enabled:
+		return mines * 0.9
 	return mines
 
 func get_allowed_seconds() -> float:

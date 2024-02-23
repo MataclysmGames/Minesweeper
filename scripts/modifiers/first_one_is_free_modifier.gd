@@ -7,3 +7,6 @@ func _init():
 
 func apply(run_data : RunData) -> void:
 	run_data.first_one_is_free = true
+
+func is_available(run_data : RunData) -> bool:
+	return not run_data.first_one_is_free

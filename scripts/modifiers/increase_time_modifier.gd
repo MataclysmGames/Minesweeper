@@ -10,3 +10,6 @@ func _init(min : int = 5, max : int = 10):
 
 func apply(run_data : RunData) -> void:
 	run_data.extra_time += amount
+
+func is_available(run_data : RunData) -> bool:
+	return true

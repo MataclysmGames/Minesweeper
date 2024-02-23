@@ -10,3 +10,6 @@ func _init(min : int = 10, max : int = 30):
 
 func apply(run_data : RunData) -> void:
 	run_data.score_multiplier *= 1 + (percent_increase / 100.0)
+
+func is_available(run_data : RunData) -> bool:
+	return true

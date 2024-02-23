@@ -7,11 +7,12 @@ colors = PackedColorArray(0.0989925, 0.183897, 0.309907, 1, 0, 0, 0, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_w8gxl"]
 noise_type = 3
+seed = 150
+frequency = 0.012
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rltjp"]
 width = 800
 height = 800
-seamless = true
 color_ramp = SubResource("Gradient_7oo8o")
 noise = SubResource("FastNoiseLite_w8gxl")
 
