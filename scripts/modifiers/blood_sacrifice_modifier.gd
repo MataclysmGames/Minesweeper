@@ -3,7 +3,7 @@ extends Modifier
 
 func _init():
 	title = "Blood\nSacrifice"
-	explanation = "All future Extra Life rewards give 1 extra life.\nCost: 3 lives"
+	explanation = "All future Extra Life rewards give 1 more life.\nCost: 3 lives"
 
 func apply(run_data : RunData) -> void:
 	run_data.blood_sacrifice = true
