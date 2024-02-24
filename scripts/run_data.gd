@@ -23,6 +23,7 @@ var first_one_is_free : bool = false
 var auto_select_empty : bool = false
 var blood_sacrifice : bool = false
 var blood_sacrifice_plus : bool = false
+var run_it_back : bool = false
 
 var modifiers : Array[Modifier]
 
@@ -142,7 +143,7 @@ static func create_nightmare() -> RunData:
 	run_data.mine_ratio = 0.09
 	run_data.mine_ratio_progress = 0.0035
 	run_data.max_mine_ratio = 0.16
-	run_data.base_time = 60
+	run_data.base_time = 45
 	run_data.progress_time = 0
 	run_data.max_level = 25
 	run_data.progress_columns = 0.6

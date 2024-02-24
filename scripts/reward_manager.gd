@@ -7,7 +7,9 @@ var one_time_modifiers : Array[Modifier] = [
 	JustColorModifier.new(),
 	FirstOneIsFreeModifier.new(),
 	BloodSacrificeModifier.new(),
-	BloodSacrificePlusModifier.new()
+	BloodSacrificePlusModifier.new(),
+	DeathByAutomationModifier.new(),
+	RunItBackModifier.new()
 ]
 
 func _ready():

@@ -1,4 +1,4 @@
-class_name AutoSelectEmptyModifier
+class_name DeathByAutomationModifier
 extends Modifier
 
 func _init():
