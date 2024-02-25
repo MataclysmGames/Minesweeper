@@ -1,6 +1,8 @@
 class_name Game
 extends Control
 
+const music_pitch : float = 0.70
+
 @onready var time_left_label : RichTextLabel = $MainContainer/InfoContainer/TimeLabel
 @onready var score_label : RichTextLabel = $MainContainer/InfoContainer/ScoreLabel
 @onready var lives_label : RichTextLabel = $MainContainer/InfoContainer/LivesLabel
@@ -86,7 +88,8 @@ func start():
 	tween.tween_property(sweeper_board, "modulate", Color(1, 1, 1, 1), 1)
 	timer.wait_time = run_data.get_allowed_seconds()
 	timer.start()
-	BackgroundAudio.play_main_theme(0.66 + (run_data.current_level / 100.0))
+	var current_pitch : float = music_pitch + (run_data.current_level / 50.0)
+	BackgroundAudio.play_main_theme(clampf(current_pitch, music_pitch, 1.05))
 
 func progress_level():
 	var seconds_remaining = timer.time_left

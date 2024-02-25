@@ -37,11 +37,11 @@ var max_mine_ratio : float = 0.10
 
 var base_rows : int = 8
 var progress_rows : float = 0.5
-var max_rows : int = 20
+var max_rows : int = 15
 
 var base_columns : int = 14
 var progress_columns : float = 1.0
-var max_columns : int = 40
+var max_columns : int = 30
 
 func _init():
 	var unix_time: float = Time.get_unix_time_from_system()
@@ -67,7 +67,7 @@ func get_mines() -> int:
 	var effective_mine_ratio : float = min(max_mine_ratio, current_mine_ratio)
 	var mines : int = ceil((size * effective_mine_ratio) + extra_mines)
 	if commando_enabled:
-		return mines * 0.9
+		mines -= max(1, mines * 0.10)
 	return mines
 
 func get_allowed_seconds() -> float:

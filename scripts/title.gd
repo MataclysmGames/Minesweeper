@@ -1,5 +1,6 @@
 extends Control
 
+const music_pitch : float = 0.70
 const tween_duration : float = 0.6
 
 @onready var title_container : VBoxContainer = $TitleContainer
@@ -25,8 +26,7 @@ const tween_duration : float = 0.6
 @onready var run_history : RunHistory = $RunHistory
 
 func _ready():
-	SaveData.reload()
-	BackgroundAudio.play_main_theme(0.66)
+	BackgroundAudio.play_main_theme(music_pitch)
 	exit_button.pressed.connect(exit_game)
 	start_button.pressed.connect(show_difficulty_select)
 	back_button.pressed.connect(show_title)
