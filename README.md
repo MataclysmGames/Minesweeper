@@ -1,6 +1,10 @@
 ## Play Online
 https://mataclysm.itch.io/minesweeper
 
+### Feature Requests
+Initial development is complete.
+Comment on the itch page above for any bug fixes or feature requests.
+
 ## Requirements
 - Install [Godot Engine 4.2.1](https://godotengine.org/download/windows/)
 - Install [Butler](https://itch.io/docs/butler/installing.html)
